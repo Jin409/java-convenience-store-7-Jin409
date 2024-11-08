@@ -1,25 +1,12 @@
 package store.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-public class ProductRepository {
 
-    private static List<Product> products;
+public interface ProductRepository {
 
-    public ProductRepository() {
-        products = new ArrayList<>();
-    }
+    void save(Product product);
 
-    public void save(Product product) {
-        products.add(product);
-    }
-
-    public List<Product> findAll() {
-        return Collections.unmodifiableList(products);
-    }
-
+    List<Product> findAll();
 }
 

@@ -2,25 +2,28 @@ package store.config;
 
 import store.controller.StoreController;
 import store.model.ProductRepository;
+import store.model.ProductRepositoryImpl;
 import store.model.PromotionRepository;
+import store.model.PromotionRepositoryImpl;
 import store.service.ProductService;
 import store.service.PromotionService;
 
 public class AppConfig {
-    private final ProductRepository productRepository;
-    private final PromotionRepository promotionRepository;
 
-    public AppConfig(ProductRepository productRepository, PromotionRepository promotionRepository) {
-        this.productRepository = productRepository;
-        this.promotionRepository = promotionRepository;
+    public PromotionRepository promotionRepository() {
+        return new PromotionRepositoryImpl();
+    }
+
+    public ProductRepository productRepository() {
+        return new ProductRepositoryImpl();
     }
 
     public PromotionService promotionService() {
-        return new PromotionService(promotionRepository);
+        return new PromotionService(promotionRepository());
     }
 
     public ProductService productService() {
-        return new ProductService(productRepository, promotionRepository);
+        return new ProductService(productRepository(), promotionRepository());
     }
 
     public StoreController storeController() {

@@ -1,23 +1,10 @@
 package store.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-public class PromotionRepository {
-    private static List<Promotion> promotions;
+public interface PromotionRepository {
 
-    public PromotionRepository() {
-        promotions = new ArrayList<>();
-    }
+    void save(Promotion promotion);
 
-    public void save(Promotion promotion) {
-        promotions.add(promotion);
-    }
-
-    public Optional<Promotion> findByName(String name) {
-        return promotions.stream()
-                .filter(promotion -> promotion.getName().equals(name))
-                .findAny();
-    }
+    Optional<Promotion> findByName(String name);
 }
