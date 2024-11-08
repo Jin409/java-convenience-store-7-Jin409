@@ -40,10 +40,18 @@ public class MarkDownReader {
             while (promotionsScanner.hasNextLine()) {
 
                 String[] str = promotionsScanner.nextLine().split(",");
+                String nameOfPromotion = str[3];
 
+                if (nameOfPromotion.equals("null")) {
+                    ProductRegisterDto productRegisterDto = new ProductRegisterDto(str[0], Long.parseLong(str[1]),
+                            Integer.parseInt(str[2]),
+                            str[3], false);
+                    productRegisterDtos.add(productRegisterDto);
+                    continue;
+                }
                 ProductRegisterDto productRegisterDto = new ProductRegisterDto(str[0], Long.parseLong(str[1]),
                         Integer.parseInt(str[2]),
-                        str[3]);
+                        str[3], true);
                 productRegisterDtos.add(productRegisterDto);
             }
 

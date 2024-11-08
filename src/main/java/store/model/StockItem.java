@@ -1,11 +1,10 @@
 package store.model;
 
-public class DefaultProduct extends Product {
+public class StockItem {
 
     private long quantity;
 
-    public DefaultProduct(String name, long price, long quantity) {
-        super(name, price);
+    public StockItem(long quantity) {
         this.quantity = quantity;
     }
 

@@ -4,7 +4,8 @@ public record ProductRegisterDto(
         String name,
         long price,
         long quantity,
-        String nameOfPromotion
+        String nameOfPromotion,
+        boolean hasPromotion
 ) {
 }
 

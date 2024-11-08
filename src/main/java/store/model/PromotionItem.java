@@ -1,12 +1,11 @@
 package store.model;
 
-public class PromotionProduct extends Product {
+public class PromotionItem {
 
     private final Promotion promotion;
     private long promotionQuantity;
 
-    public PromotionProduct(String name, long price, Promotion promotion, long promotionQuantity) {
-        super(name, price);
+    public PromotionItem(Promotion promotion, long promotionQuantity) {
         this.promotion = promotion;
         this.promotionQuantity = promotionQuantity;
     }

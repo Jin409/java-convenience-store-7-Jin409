@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import store.dto.ProductDisplayDto;
+import store.dto.ProductDisplayDto.Stock;
 import store.io.view.formatter.OutputFormatter;
 
 public class OutputFormatterTest {
     @Test
     void 알맞은_형태로_상품의_정보들을_포매팅한다() {
         // given
-        List<ProductDisplayDto> productDisplayDtos = List.of(new ProductDisplayDto.Default("상품명", 1500L, 3L),
+        List<ProductDisplayDto> productDisplayDtos = List.of(new Stock("상품명", 1500L, 3L),
                 new ProductDisplayDto.Promotion("상품명2", 1500L, "MD추천", 4L)
         );
 

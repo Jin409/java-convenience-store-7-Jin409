@@ -1,7 +1,7 @@
 package store.dto;
 
 public record OrderRegisterDto(
-        String name,
+        String nameOfProduct,
         long quantity
 ) {
 }

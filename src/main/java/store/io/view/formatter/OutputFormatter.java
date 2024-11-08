@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 import store.dto.ProductDisplayDto;
-import store.dto.ProductDisplayDto.Default;
+import store.dto.ProductDisplayDto.Stock;
 import store.dto.ProductDisplayDto.Promotion;
 
 public class OutputFormatter {
@@ -22,8 +22,8 @@ public class OutputFormatter {
             stringJoiner.add(productDisplayDto.getName());
             stringJoiner.add(productDisplayDto.getPrice() + "원");
 
-            if (productDisplayDto instanceof ProductDisplayDto.Default) {
-                String result = formatInformationOfDefaultProduct(stringJoiner, (Default) productDisplayDto);
+            if (productDisplayDto instanceof Stock) {
+                String result = formatInformationOfDefaultProduct(stringJoiner, (Stock) productDisplayDto);
                 results.add(result);
             }
 
@@ -44,8 +44,8 @@ public class OutputFormatter {
     }
 
     private static String formatInformationOfDefaultProduct(StringJoiner stringJoiner,
-                                                            ProductDisplayDto.Default defaultProductDisplayDto) {
-        stringJoiner.add(defaultProductDisplayDto.getQuantity() + "개");
+                                                            Stock stockProductDisplayDto) {
+        stringJoiner.add(stockProductDisplayDto.getQuantity() + "개");
         return stringJoiner.toString();
     }
 

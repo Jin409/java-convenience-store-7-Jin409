@@ -17,10 +17,10 @@ public class ProductDisplayDto {
         return price;
     }
 
-    public static class Default extends ProductDisplayDto {
+    public static class Stock extends ProductDisplayDto {
         private final long quantity;
 
-        public Default(String name, long price, long quantity) {
+        public Stock(String name, long price, long quantity) {
             super(name, price);
             this.quantity = quantity;
         }
