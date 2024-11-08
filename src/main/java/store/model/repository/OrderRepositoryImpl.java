@@ -1,6 +1,7 @@
 package store.model.repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import store.model.Order;
 
@@ -14,5 +15,10 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public void save(Order order) {
         orders.add(order);
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return Collections.unmodifiableList(orders);
     }
 }

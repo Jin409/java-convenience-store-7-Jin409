@@ -1,4 +1,4 @@
-package service;
+package store.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 

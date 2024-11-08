@@ -30,8 +30,7 @@ public class StoreController {
         saveProducts();
         displayInformation();
 
-        List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
-        orderService.saveOrders(orderFromCustomer);
+        saveOrders();
     }
 
     private void savePromotions() {
@@ -49,4 +48,8 @@ public class StoreController {
         OutputView.displayAllInformationOfProducts(productDisplayDtos);
     }
 
+    private void saveOrders() {
+        List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
+        orderService.saveOrders(orderFromCustomer);
+    }
 }

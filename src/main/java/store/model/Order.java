@@ -12,5 +12,9 @@ public class Order {
         this.quantity = quantity;
         this.orderedAt = orderedAt;
     }
+
+    public void process() {
+        product.reduceQuantity(quantity);
+    }
 }
 

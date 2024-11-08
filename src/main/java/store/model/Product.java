@@ -3,7 +3,7 @@ package store.model;
 public class Product {
     private final String name;
     private final long price;
-    private final long quantity;
+    private long quantity;
     private final Promotion promotion;
 
     public Product(String name, long price, long quantity, Promotion promotion) {
@@ -27,6 +27,13 @@ public class Product {
 
     public Promotion getPromotion() {
         return promotion;
+    }
+
+    public void reduceQuantity(long soldQuantity) {
+        if (quantity < soldQuantity) {
+            throw new IllegalArgumentException(ErrorMessages.Product.NOT_ENOUGH_QUANTITY);
+        }
+        quantity = quantity - soldQuantity;
     }
 }
 
