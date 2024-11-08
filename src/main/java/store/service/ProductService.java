@@ -1,6 +1,7 @@
 package store.service;
 
 import java.util.List;
+import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.model.Product;
 import store.model.ProductRepository;
@@ -30,5 +31,10 @@ public class ProductService {
                     productRegisterDto.quantity(), promotion);
             productRepository.save(product);
         }
+    }
+
+    public List<ProductDisplayDto> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(ProductDisplayDto::from).toList();
     }
 }

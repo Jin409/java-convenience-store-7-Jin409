@@ -17,5 +17,9 @@ public class ProductRepository {
         products.add(product);
     }
 
+    public List<Product> findAll() {
+        return Collections.unmodifiableList(products);
+    }
+
 }
 

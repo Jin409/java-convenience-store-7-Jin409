@@ -1,9 +1,11 @@
 package store.controller;
 
 import java.util.List;
+import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.dto.PromotionRegisterDto;
 import store.io.MarkDownReader;
+import store.io.view.OutputView;
 import store.service.ProductService;
 import store.service.PromotionService;
 
@@ -20,6 +22,12 @@ public class StoreController {
     public void run() {
         savePromotions();
         saveProducts();
+        displayInformation();
+    }
+
+    private void displayInformation() {
+        List<ProductDisplayDto> productDisplayDtos = productService.getAllProducts();
+        OutputView.displayAllInformationOfProducts(productDisplayDtos);
     }
 
     private void savePromotions() {
