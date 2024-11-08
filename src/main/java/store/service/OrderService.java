@@ -32,6 +32,5 @@ public class OrderService {
 
     public void processOrders() {
         List<Order> orders = orderRepository.findAll();
-        orders.forEach(Order::process);
     }
 }
