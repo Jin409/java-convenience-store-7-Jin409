@@ -20,4 +20,8 @@ public class Promotion {
     public String getName() {
         return name;
     }
+
+    public boolean isApplicable(LocalDate orderedDate) {
+        return startDate.isBefore(orderedDate) && endDate.isAfter(orderedDate);
+    }
 }
