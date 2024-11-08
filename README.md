@@ -2,8 +2,8 @@
 
 ## 가게는 상품과 할인 정보들을 갖고 있다.
 
-- [ ] promotions.md 를 저장한다.
-- [ ] productions.md 를 저장한다.
+- [x] promotions.md 를 저장한다.
+- [x] productions.md 를 저장한다.
 
 ## 손님이 오면 가게에서는 상품과 할인 정보들을 보여준다
 
