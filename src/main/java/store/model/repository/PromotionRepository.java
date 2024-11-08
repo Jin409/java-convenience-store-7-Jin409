@@ -1,6 +1,7 @@
-package store.model;
+package store.model.repository;
 
 import java.util.Optional;
+import store.model.Promotion;
 
 public interface PromotionRepository {
 

@@ -1,10 +1,10 @@
-package store.model;
+package store.model.repository;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.params.ParameterizedTest;
+import store.model.Promotion;
 
 public class PromotionRepositoryImpl implements PromotionRepository {
     private static List<Promotion> promotions;

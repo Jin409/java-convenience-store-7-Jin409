@@ -4,9 +4,9 @@ import java.util.List;
 import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.model.Product;
-import store.model.ProductRepository;
+import store.model.repository.ProductRepository;
 import store.model.Promotion;
-import store.model.PromotionRepository;
+import store.model.repository.PromotionRepository;
 
 public class ProductService {
     private final ProductRepository productRepository;

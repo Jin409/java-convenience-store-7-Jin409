@@ -3,7 +3,7 @@ package store.service;
 import java.util.List;
 import store.dto.PromotionRegisterDto;
 import store.model.Promotion;
-import store.model.PromotionRepository;
+import store.model.repository.PromotionRepository;
 
 public class PromotionService {
     private final PromotionRepository promotionRepository;

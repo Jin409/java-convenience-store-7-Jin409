@@ -1,10 +1,13 @@
 package store.config;
 
 import store.controller.StoreController;
-import store.model.ProductRepository;
-import store.model.ProductRepositoryImpl;
-import store.model.PromotionRepository;
-import store.model.PromotionRepositoryImpl;
+import store.model.repository.OrderRepository;
+import store.model.repository.OrderRepositoryImpl;
+import store.model.repository.ProductRepository;
+import store.model.repository.ProductRepositoryImpl;
+import store.model.repository.PromotionRepository;
+import store.model.repository.PromotionRepositoryImpl;
+import store.service.OrderService;
 import store.service.ProductService;
 import store.service.PromotionService;
 
@@ -18,6 +21,10 @@ public class AppConfig {
         return new ProductRepositoryImpl();
     }
 
+    public OrderRepository orderRepository() {
+        return new OrderRepositoryImpl();
+    }
+
     public PromotionService promotionService() {
         return new PromotionService(promotionRepository());
     }
@@ -26,7 +33,11 @@ public class AppConfig {
         return new ProductService(productRepository(), promotionRepository());
     }
 
+    public OrderService orderService() {
+        return new OrderService(orderRepository(), productRepository());
+    }
+
     public StoreController storeController() {
-        return new StoreController(promotionService(), productService());
+        return new StoreController(promotionService(), productService(), orderService());
     }
 }

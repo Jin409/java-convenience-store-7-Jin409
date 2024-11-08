@@ -1,8 +1,10 @@
-package store.model;
+package store.model.repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import store.model.Product;
 
 public class ProductRepositoryImpl implements ProductRepository {
 
@@ -22,4 +24,8 @@ public class ProductRepositoryImpl implements ProductRepository {
         return Collections.unmodifiableList(products);
     }
 
+    @Override
+    public Optional<Product> findByName(String name) {
+        return products.stream().filter(product -> product.getName().equals(name)).findFirst();
+    }
 }
