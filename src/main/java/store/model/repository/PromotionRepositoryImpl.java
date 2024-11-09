@@ -4,7 +4,7 @@ package store.model.repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import store.model.Promotion;
+import store.model.promotion.Promotion;
 
 public class PromotionRepositoryImpl implements PromotionRepository {
     private static List<Promotion> promotions;

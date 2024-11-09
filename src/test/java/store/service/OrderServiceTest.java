@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import store.config.AppConfig;
 import store.dto.OrderRegisterDto;
 import store.model.Product;
-import store.model.Promotion;
-import store.model.PromotionItem;
+import store.model.promotion.Promotion;
+import store.model.promotion.PromotionItem;
 import store.model.StockItem;
+import store.model.promotion.PromotionType;
 import store.model.repository.ProductRepository;
 
 public class OrderServiceTest {
@@ -59,7 +60,8 @@ public class OrderServiceTest {
         String name = "사이다";
         long orderedQuantity = 2;
         List<OrderRegisterDto> orderRegisterDtos = List.of(new OrderRegisterDto(name, orderedQuantity, orderedAt));
-        Promotion promotion = new Promotion("MD추천", 1, 1, orderedAt.minusDays(1), orderedAt.plusDays(1));
+        Promotion promotion = new Promotion("MD추천", 1, 1, orderedAt.minusDays(1), orderedAt.plusDays(1),
+                PromotionType.RECOMMENDATION);
 
         ProductRepository fakeProductRepository = new ProductRepository() {
             @Override

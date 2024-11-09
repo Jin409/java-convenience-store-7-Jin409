@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import store.dto.ProductRegisterDto;
-import store.model.Promotion;
+import store.model.promotion.Promotion;
 import store.model.repository.ProductRepositoryImpl;
 import store.model.repository.PromotionRepository;
 import store.service.product.ProductService;

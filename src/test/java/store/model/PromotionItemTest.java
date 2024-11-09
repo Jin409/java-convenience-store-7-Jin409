@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import store.model.promotion.Promotion;
+import store.model.promotion.PromotionItem;
+import store.model.promotion.PromotionType;
 
 public class PromotionItemTest {
     private PromotionItem promotionItem;
@@ -13,7 +16,7 @@ public class PromotionItemTest {
     @BeforeEach
     void setUp() {
         LocalDate endDate = LocalDate.of(2020, 1, 1);
-        Promotion promotion = new Promotion("탄산 1+2", 1, 1, endDate.minusDays(1), endDate);
+        Promotion promotion = new Promotion("탄산 1+2", 1, 1, endDate.minusDays(1), endDate, PromotionType.N_PLUS_M);
         this.quantity = 3;
         this.promotionItem = new PromotionItem(promotion, quantity);
     }
