@@ -14,5 +14,13 @@ public class Order {
         this.orderedAt = orderedAt;
         this.discountedPrice = discountedPrice;
     }
+
+    public long getOriginalPrice() {
+        return product.getPrice() * quantity;
+    }
+
+    public long getDiscountedPrice() {
+        return discountedPrice;
+    }
 }
 

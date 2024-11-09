@@ -23,13 +23,10 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public void processOrder(OrderRegisterDto orderRegisterDto, boolean isMembershipDiscountApplied) {
+    public void processOrder(OrderRegisterDto orderRegisterDto) {
         String nameOfProduct = orderRegisterDto.nameOfProduct();
         Product product = getProductWithName(nameOfProduct);
         inventoryHandler.reduceQuantity(product, orderRegisterDto.quantity(), orderRegisterDto.orderAt());
-        if (isMembershipDiscountApplied) {
-            applyMembershipDiscount(orderRegisterDto);
-        }
         Order order = createOrder(product, orderRegisterDto);
         orderRepository.save(order);
     }

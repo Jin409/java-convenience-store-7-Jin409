@@ -9,6 +9,8 @@ import store.dto.PromotionRegisterDto;
 import store.handler.InputHandler;
 import store.io.MarkDownReader;
 import store.io.view.OutputView;
+import store.model.Orders;
+import store.service.MembershipDiscountService;
 import store.service.OrderService;
 import store.service.PromotionApplyResult;
 import store.service.PromotionService;
@@ -18,12 +20,14 @@ public class StoreController {
     private final PromotionService promotionService;
     private final ProductService productService;
     private final OrderService orderService;
+    private final MembershipDiscountService membershipDiscountService;
 
-    public StoreController(PromotionService promotionService, ProductService productService,
-                           OrderService orderService) {
+    public StoreController(PromotionService promotionService, ProductService productService, OrderService orderService,
+                           MembershipDiscountService membershipDiscountService) {
         this.promotionService = promotionService;
         this.productService = productService;
         this.orderService = orderService;
+        this.membershipDiscountService = membershipDiscountService;
     }
 
     public void run() {
@@ -53,8 +57,11 @@ public class StoreController {
         List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
         for (OrderRegisterDto originDto : orderFromCustomer) {
             OrderRegisterDto validDto = getValidOrderRegisterDto(originDto);
-            AnswerSign answerSign = InputHandler.askToApplyMembershipDiscount();
-            orderService.processOrder(validDto, answerSign.meansTrue());
+            orderService.processOrder(validDto);
+        }
+        AnswerSign answerSign = InputHandler.askToApplyMembershipDiscount();
+        if (answerSign.meansTrue()) {
+            Orders orders = membershipDiscountService.getOrdersWithMembershipDiscount();
         }
     }
 
