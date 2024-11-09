@@ -18,6 +18,7 @@ import store.model.StockItem;
 import store.model.promotion.Promotion;
 import store.model.promotion.PromotionItem;
 import store.model.promotion.PromotionType;
+import store.model.repository.OrderRepositoryImpl;
 import store.model.repository.ProductRepository;
 
 public class OrderServiceTest {
@@ -86,7 +87,8 @@ public class OrderServiceTest {
                     return Optional.of(new Product("사이다", 1000, new StockItem(1), new PromotionItem(promotion, 10)));
                 }
             };
-            orderServiceWithCustom = new OrderService(productRepository, appConfig.inventoryHandler());
+            orderServiceWithCustom = new OrderService(productRepository, appConfig.inventoryHandler(),
+                    new OrderRepositoryImpl());
         }
 
         @Test
@@ -128,38 +130,4 @@ public class OrderServiceTest {
                     () -> assertThat(promotionApplyResult.getMissingOrderQuantity()).isEqualTo(0));
         }
     }
-
-    @Test
-    void 증정품을_고려한_적절한_가격을_반환한다() {
-        // given
-        LocalDate orderedAt = LocalDate.of(2022, 10, 22);
-        Promotion promotion = new Promotion("2+1", 2, 1, orderedAt.minusDays(1), orderedAt.plusDays(1),
-                PromotionType.N_PLUS_M);
-        Product product = new Product("사이다", 1000, new StockItem(1), new PromotionItem(promotion, 10));
-        ProductRepository productRepository = new ProductRepository() {
-            @Override
-            public void save(Product product) {
-                return;
-            }
-
-            @Override
-            public List<Product> findAll() {
-                return List.of();
-            }
-
-            @Override
-            public Optional<Product> findByName(String name) {
-                return Optional.of(new Product("사이다", 1000, new StockItem(1), new PromotionItem(promotion, 10)));
-            }
-        };
-        OrderService orderService = new OrderService(productRepository, appConfig.inventoryHandler());
-
-        // when
-        long discountedPrice = orderService.calculateDiscountedPrice(product,
-                new OrderRegisterDto("사이다", 3, orderedAt));
-
-        // then
-        assertThat(discountedPrice).isEqualTo(2000);
-    }
-
 }

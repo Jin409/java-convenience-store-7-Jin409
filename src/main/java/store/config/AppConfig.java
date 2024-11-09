@@ -1,6 +1,8 @@
 package store.config;
 
 import store.controller.StoreController;
+import store.model.repository.OrderRepository;
+import store.model.repository.OrderRepositoryImpl;
 import store.model.repository.ProductRepository;
 import store.model.repository.ProductRepositoryImpl;
 import store.model.repository.PromotionRepository;
@@ -22,6 +24,10 @@ public class AppConfig {
         return new ProductRepositoryImpl();
     }
 
+    public OrderRepository orderRepository() {
+        return new OrderRepositoryImpl();
+    }
+
     public InventoryHandler inventoryHandler() {
         PromotionItemInventoryHandler promotionItemQuantityManagingHandler = new PromotionItemInventoryHandler();
         StockItemInventoryHandler stockItemQuantityManagingHandler = new StockItemInventoryHandler();
@@ -40,7 +46,7 @@ public class AppConfig {
     }
 
     public OrderService orderService() {
-        return new OrderService(productRepository(), inventoryHandler());
+        return new OrderService(productRepository(), inventoryHandler(), orderRepository());
     }
 
     public StoreController storeController() {
