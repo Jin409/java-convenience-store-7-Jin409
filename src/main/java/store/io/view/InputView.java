@@ -22,4 +22,9 @@ public class InputView {
         System.out.println(informationText);
         return Console.readLine();
     }
+
+    public static String askToApplyMembershipDiscount() {
+        System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
+        return Console.readLine();
+    }
 }

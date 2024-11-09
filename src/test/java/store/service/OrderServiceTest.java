@@ -39,7 +39,7 @@ public class OrderServiceTest {
         OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 2L, orderedAt);
 
         // when & then
-        assertThatThrownBy(() -> orderService.processOrder(orderRegisterDto)).isInstanceOf(
+        assertThatThrownBy(() -> orderService.processOrder(orderRegisterDto, false)).isInstanceOf(
                 IllegalArgumentException.class).hasMessage(ErrorMessages.OrderService.INVALID_PRODUCT);
     }
 
@@ -53,7 +53,7 @@ public class OrderServiceTest {
                 PromotionType.RECOMMENDATION);
 
         // when & then
-        assertThatThrownBy(() -> orderService.processOrder(orderRegisterDto)).isInstanceOf(
+        assertThatThrownBy(() -> orderService.processOrder(orderRegisterDto, false)).isInstanceOf(
                 IllegalArgumentException.class);
     }
 

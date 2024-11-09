@@ -18,10 +18,17 @@ public class OrderService {
         this.inventoryHandler = inventoryHandler;
     }
 
-    public void processOrder(OrderRegisterDto orderRegisterDto) {
+    public void processOrder(OrderRegisterDto orderRegisterDto, boolean isMembershipDiscountApplied) {
         String nameOfProduct = orderRegisterDto.nameOfProduct();
         Product product = getProductWithName(nameOfProduct);
         inventoryHandler.reduceQuantity(product, orderRegisterDto.quantity(), orderRegisterDto.orderAt());
+        if (isMembershipDiscountApplied) {
+            applyMembershipDiscount(orderRegisterDto);
+        }
+    }
+
+    private void applyMembershipDiscount(OrderRegisterDto orderRegisterDto) {
+
     }
 
     public PromotionApplyResult applyPromotion(OrderRegisterDto orderRegisterDto) {

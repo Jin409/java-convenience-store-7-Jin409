@@ -25,4 +25,8 @@ public class InputHandler {
         String answer = InputView.askToBuyWithoutPromotion(applyResult);
         return AnswerSign.getBySign(answer);
     }
+
+    public static AnswerSign askToApplyMembershipDiscount() {
+        return AnswerSign.getBySign(InputView.askToApplyMembershipDiscount());
+    }
 }

@@ -31,7 +31,7 @@ public class StoreController {
         saveProducts();
         displayInformation();
 
-        saveOrders();
+        processOrders();
     }
 
     private void savePromotions() {
@@ -49,11 +49,12 @@ public class StoreController {
         OutputView.displayAllInformationOfProducts(productDisplayDtos);
     }
 
-    private void saveOrders() {
+    private void processOrders() {
         List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
         for (OrderRegisterDto originDto : orderFromCustomer) {
             OrderRegisterDto validDto = getValidOrderRegisterDto(originDto);
-            orderService.processOrder(validDto);
+            AnswerSign answerSign = InputHandler.askToApplyMembershipDiscount();
+            orderService.processOrder(validDto, answerSign.meansTrue());
         }
     }
 
