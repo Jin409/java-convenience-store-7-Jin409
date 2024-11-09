@@ -22,8 +22,8 @@ public class OutputFormatterTest {
 
         // then
         assertAll(() -> assertThat(information.size()).isEqualTo(2),
-                () -> assertThat(information.getFirst()).isEqualTo("- 상품명 1500원 3개"),
-                () -> assertThat(information.getLast()).isEqualTo("- 상품명2 1500원 4개 MD추천")
+                () -> assertThat(information.getFirst()).isEqualTo("- 상품명 1,500원 3개"),
+                () -> assertThat(information.getLast()).isEqualTo("- 상품명2 1,500원 4개 MD추천")
         );
     }
 }
