@@ -3,8 +3,10 @@ package store.service;
 
 import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
 
+import java.util.List;
 import store.dto.OrderRegisterDto;
 import store.model.Order;
+import store.model.Orders;
 import store.model.Product;
 import store.model.promotion.Promotion;
 import store.model.repository.OrderRepository;
@@ -41,13 +43,14 @@ public class OrderService {
         long quantity = orderRegisterDto.quantity();
         if (product.isPromotionAvailable(orderRegisterDto.orderAt())) {
             Promotion promotion = product.getPromotionItem().getPromotion();
-            return (quantity - promotion.countFreeQuantity(quantity)) * product.getPrice();
+            return promotion.countFreeQuantity(quantity) * product.getPrice();
         }
-        return quantity * product.getPrice();
+        return 0;
     }
 
-    private void applyMembershipDiscount(OrderRegisterDto orderRegisterDto) {
-
+    public Orders createOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return new Orders(orders, 0);
     }
 
     public PromotionApplyResult applyPromotion(OrderRegisterDto orderRegisterDto) {

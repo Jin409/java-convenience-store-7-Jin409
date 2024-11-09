@@ -14,6 +14,7 @@ import store.service.MembershipDiscountService;
 import store.service.OrderService;
 import store.service.PromotionApplyResult;
 import store.service.PromotionService;
+import store.service.ReceiptService;
 import store.service.product.ProductService;
 
 public class StoreController {
@@ -21,13 +22,15 @@ public class StoreController {
     private final ProductService productService;
     private final OrderService orderService;
     private final MembershipDiscountService membershipDiscountService;
+    private final ReceiptService receiptService;
 
     public StoreController(PromotionService promotionService, ProductService productService, OrderService orderService,
-                           MembershipDiscountService membershipDiscountService) {
+                           MembershipDiscountService membershipDiscountService, ReceiptService receiptService) {
         this.promotionService = promotionService;
         this.productService = productService;
         this.orderService = orderService;
         this.membershipDiscountService = membershipDiscountService;
+        this.receiptService = receiptService;
     }
 
     public void run() {
@@ -59,10 +62,16 @@ public class StoreController {
             OrderRegisterDto validDto = getValidOrderRegisterDto(originDto);
             orderService.processOrder(validDto);
         }
+        Orders orders = getOrdersWithMembershipDiscount();
+        OutputView.displayReceipt(receiptService.getReceipt(orders));
+    }
+
+    private Orders getOrdersWithMembershipDiscount() {
         AnswerSign answerSign = InputHandler.askToApplyMembershipDiscount();
         if (answerSign.meansTrue()) {
-            Orders orders = membershipDiscountService.getOrdersWithMembershipDiscount();
+            return membershipDiscountService.getOrdersWithMembershipDiscount();
         }
+        return orderService.createOrders();
     }
 
     private OrderRegisterDto getValidOrderRegisterDto(OrderRegisterDto originDto) {

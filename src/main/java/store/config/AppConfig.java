@@ -10,6 +10,7 @@ import store.model.repository.PromotionRepositoryImpl;
 import store.service.MembershipDiscountService;
 import store.service.OrderService;
 import store.service.PromotionService;
+import store.service.ReceiptService;
 import store.service.product.InventoryHandler;
 import store.service.product.ProductService;
 import store.service.product.PromotionItemInventoryHandler;
@@ -54,7 +55,12 @@ public class AppConfig {
         return new MembershipDiscountService(orderRepository());
     }
 
+    public ReceiptService receiptService() {
+        return new ReceiptService();
+    }
+
     public StoreController storeController() {
-        return new StoreController(promotionService(), productService(), orderService(), membershipDiscountService());
+        return new StoreController(promotionService(), productService(), orderService(), membershipDiscountService(),
+                receiptService());
     }
 }

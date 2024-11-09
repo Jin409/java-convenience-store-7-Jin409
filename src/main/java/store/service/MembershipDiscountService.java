@@ -19,7 +19,7 @@ public class MembershipDiscountService {
         List<Order> orders = orderRepository.findAll();
         long totalOriginalPrice = orders.stream().mapToLong(Order::getOriginalPrice).sum();
 
-        double discountedAmount = totalOriginalPrice * DISCOUNTED_RATE;
+        long discountedAmount = (long) (totalOriginalPrice * DISCOUNTED_RATE);
         if (discountedAmount < MAXIMUM_MEMBERSHIP_DISCOUNTED) {
             return new Orders(orders, discountedAmount);
         }

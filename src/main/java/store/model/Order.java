@@ -19,8 +19,20 @@ public class Order {
         return product.getPrice() * quantity;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
     public long getDiscountedPrice() {
         return discountedPrice;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public long countFreeItems() {
+        return discountedPrice / product.getPrice();
     }
 }
 
