@@ -36,9 +36,11 @@ public class StoreController {
     public void run() {
         savePromotions();
         saveProducts();
-        displayInformation();
 
-        processOrders();
+        do {
+            displayInformation();
+            processOrders();
+        } while (InputHandler.askToLeave().meansTrue());
     }
 
     private void savePromotions() {

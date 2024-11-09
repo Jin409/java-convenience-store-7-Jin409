@@ -29,4 +29,8 @@ public class InputHandler {
     public static AnswerSign askToApplyMembershipDiscount() {
         return AnswerSign.getBySign(InputView.askToApplyMembershipDiscount());
     }
+
+    public static AnswerSign askToLeave() {
+        return AnswerSign.getBySign(InputView.askToLeave());
+    }
 }
