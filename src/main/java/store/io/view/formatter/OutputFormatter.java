@@ -1,5 +1,6 @@
 package store.io.view.formatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -12,6 +13,8 @@ public class OutputFormatter {
     private OutputFormatter() {
     }
 
+    private static final String DECIMAL_FORMAT = "###,###";
+
     public static List<String> formatInformationOfProducts(List<ProductDisplayDto> productDisplayDtos) {
         List<String> results = new ArrayList<>();
 
@@ -20,7 +23,7 @@ public class OutputFormatter {
 
             stringJoiner.add("-");
             stringJoiner.add(productDisplayDto.getName());
-            stringJoiner.add(productDisplayDto.getPrice() + "원");
+            stringJoiner.add(new DecimalFormat(DECIMAL_FORMAT).format(productDisplayDto.getPrice()) + "원");
 
             if (productDisplayDto instanceof Stock) {
                 String result = formatInformationOfDefaultProduct(stringJoiner, (Stock) productDisplayDto);
@@ -37,16 +40,23 @@ public class OutputFormatter {
 
     private static String formatInformationOfPromotionProduct(StringJoiner stringJoiner,
                                                               ProductDisplayDto.Promotion promotionProductDisplayDto) {
-        stringJoiner.add(promotionProductDisplayDto.getQuantityOfPromotion() + "개");
+        formatQuantity(stringJoiner, promotionProductDisplayDto.getQuantityOfPromotion());
         stringJoiner.add(promotionProductDisplayDto.getNameOfPromotion());
-
         return stringJoiner.toString();
     }
 
-    private static String formatInformationOfDefaultProduct(StringJoiner stringJoiner,
-                                                            Stock stockProductDisplayDto) {
-        stringJoiner.add(stockProductDisplayDto.getQuantity() + "개");
+    private static String formatInformationOfDefaultProduct(StringJoiner stringJoiner, Stock stockProductDisplayDto) {
+        formatQuantity(stringJoiner, stockProductDisplayDto.getQuantity());
         return stringJoiner.toString();
+    }
+
+    private static StringJoiner formatQuantity(StringJoiner stringJoiner, long quantity) {
+        if (quantity == 0) {
+            stringJoiner.add("재고 없음");
+            return stringJoiner;
+        }
+        stringJoiner.add(quantity + "개");
+        return stringJoiner;
     }
 
 }
