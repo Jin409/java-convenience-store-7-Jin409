@@ -1,5 +1,6 @@
 package store.io.view.formatter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import store.dto.OrderRegisterDto;
@@ -14,7 +15,7 @@ public class InputFormatter {
             String nameOfProduct = split[0];
             long quantity = Long.parseLong(split[1]);
 
-            orderRegisterDtos.add(new OrderRegisterDto(nameOfProduct, quantity));
+            orderRegisterDtos.add(new OrderRegisterDto(nameOfProduct, quantity, LocalDate.now()));
         }
 
         return orderRegisterDtos;
