@@ -8,8 +8,11 @@ import store.model.repository.ProductRepositoryImpl;
 import store.model.repository.PromotionRepository;
 import store.model.repository.PromotionRepositoryImpl;
 import store.service.OrderService;
-import store.service.ProductService;
+import store.service.product.ProductService;
 import store.service.PromotionService;
+import store.service.product.PromotionItemInventoryHandler;
+import store.service.product.InventoryHandler;
+import store.service.product.StockItemInventoryHandler;
 
 public class AppConfig {
 
@@ -25,6 +28,15 @@ public class AppConfig {
         return new OrderRepositoryImpl();
     }
 
+    public InventoryHandler quantityManagingHandler() {
+        PromotionItemInventoryHandler promotionItemQuantityManagingHandler = new PromotionItemInventoryHandler();
+        StockItemInventoryHandler stockItemQuantityManagingHandler = new StockItemInventoryHandler();
+
+        promotionItemQuantityManagingHandler.setNext(stockItemQuantityManagingHandler);
+
+        return promotionItemQuantityManagingHandler;
+    }
+
     public PromotionService promotionService() {
         return new PromotionService(promotionRepository());
     }
@@ -34,7 +46,7 @@ public class AppConfig {
     }
 
     public OrderService orderService() {
-        return new OrderService(orderRepository(), productRepository());
+        return new OrderService(productRepository(), quantityManagingHandler());
     }
 
     public StoreController storeController() {

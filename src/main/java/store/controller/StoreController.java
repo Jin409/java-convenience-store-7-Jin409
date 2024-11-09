@@ -10,7 +10,7 @@ import store.handler.InputHandler;
 import store.io.MarkDownReader;
 import store.io.view.OutputView;
 import store.service.OrderService;
-import store.service.ProductService;
+import store.service.product.ProductService;
 import store.service.PromotionService;
 
 public class StoreController {
@@ -50,6 +50,6 @@ public class StoreController {
 
     private void saveOrders() {
         List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
-        orderService.saveOrders(orderFromCustomer);
+        orderService.processOrders(orderFromCustomer);
     }
 }

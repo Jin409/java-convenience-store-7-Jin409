@@ -1,5 +1,7 @@
 package store.model;
 
+import java.time.LocalDate;
+
 public class PromotionItem {
 
     private final Promotion promotion;
@@ -16,5 +18,21 @@ public class PromotionItem {
 
     public long getPromotionQuantity() {
         return promotionQuantity;
+    }
+
+    public boolean isApplicable(LocalDate orderedAt) {
+        return promotion.isApplicable(orderedAt);
+    }
+
+    public long getRemainingAfterReduction(long reduceQuantity) {
+        long originalQuantity = promotionQuantity;
+
+        if (reduceQuantity > promotionQuantity) {
+            this.promotionQuantity = 0;
+            return reduceQuantity - originalQuantity;
+        }
+
+        promotionQuantity = promotionQuantity - reduceQuantity;
+        return 0;
     }
 }

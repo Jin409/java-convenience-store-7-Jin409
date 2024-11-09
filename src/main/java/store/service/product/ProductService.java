@@ -1,4 +1,4 @@
-package store.service;
+package store.service.product;
 
 import static store.service.ErrorMessages.ProductService.INVALID_PROMOTION_NAME;
 

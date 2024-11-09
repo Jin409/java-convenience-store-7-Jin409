@@ -1,5 +1,7 @@
 package store.model;
 
+import java.time.LocalDate;
+
 public class Product {
     private final String name;
     private final long price;
@@ -35,6 +37,25 @@ public class Product {
 
     public PromotionItem getPromotionItem() {
         return promotionItem;
+    }
+
+    public boolean isPromotionAvailable(LocalDate orderedAt) {
+        if (promotionItem == null) {
+            return false;
+        }
+        return promotionItem.isApplicable(orderedAt);
+    }
+
+    public long getRemainingAfterApplyingPromotion(long reduceQuantity) {
+        return promotionItem.getRemainingAfterReduction(reduceQuantity);
+    }
+
+    public void applyStockReduction(long reduceQuantity) {
+        stockItem.reduceQuantity(reduceQuantity);
+    }
+
+    public boolean isStockItemUnAvailable() {
+        return stockItem == null;
     }
 }
 
