@@ -1,17 +1,15 @@
 package store.config;
 
 import store.controller.StoreController;
-import store.model.repository.OrderRepository;
-import store.model.repository.OrderRepositoryImpl;
 import store.model.repository.ProductRepository;
 import store.model.repository.ProductRepositoryImpl;
 import store.model.repository.PromotionRepository;
 import store.model.repository.PromotionRepositoryImpl;
 import store.service.OrderService;
-import store.service.product.ProductService;
 import store.service.PromotionService;
-import store.service.product.PromotionItemInventoryHandler;
 import store.service.product.InventoryHandler;
+import store.service.product.ProductService;
+import store.service.product.PromotionItemInventoryHandler;
 import store.service.product.StockItemInventoryHandler;
 
 public class AppConfig {
@@ -22,10 +20,6 @@ public class AppConfig {
 
     public ProductRepository productRepository() {
         return new ProductRepositoryImpl();
-    }
-
-    public OrderRepository orderRepository() {
-        return new OrderRepositoryImpl();
     }
 
     public InventoryHandler inventoryHandler() {

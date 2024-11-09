@@ -10,8 +10,9 @@ import store.handler.InputHandler;
 import store.io.MarkDownReader;
 import store.io.view.OutputView;
 import store.service.OrderService;
-import store.service.product.ProductService;
+import store.service.PromotionApplyResult;
 import store.service.PromotionService;
+import store.service.product.ProductService;
 
 public class StoreController {
     private final PromotionService promotionService;
@@ -50,6 +51,31 @@ public class StoreController {
 
     private void saveOrders() {
         List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
-        orderService.processOrders(orderFromCustomer);
+        for (OrderRegisterDto originDto : orderFromCustomer) {
+            OrderRegisterDto validDto = getValidOrderRegisterDto(originDto);
+            orderService.processOrder(validDto);
+        }
+    }
+
+    private OrderRegisterDto getValidOrderRegisterDto(OrderRegisterDto originDto) {
+        PromotionApplyResult promotionApplyResult = orderService.applyPromotion(originDto);
+        if (promotionApplyResult.isInvalid()) {
+            return handleAdditionalItems(originDto, promotionApplyResult);
+        }
+        return originDto;
+    }
+
+    private OrderRegisterDto handleAdditionalItems(OrderRegisterDto originDto,
+                                                   PromotionApplyResult promotionApplyResult) {
+        AnswerSign answerSign = InputHandler.askToAddMoreItems(promotionApplyResult);
+        if (answerSign.meansTrue()) {
+            return createOrderWithAdditionalQuantity(originDto, promotionApplyResult);
+        }
+        return originDto;
+    }
+
+    private OrderRegisterDto createOrderWithAdditionalQuantity(OrderRegisterDto originDto,
+                                                               PromotionApplyResult promotionApplyResult) {
+        return OrderRegisterDto.from(originDto, promotionApplyResult.getMissingOrderQuantity());
     }
 }

@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import store.model.promotion.Promotion;
 import store.model.promotion.PromotionType;
 
@@ -19,5 +21,19 @@ public class PromotionTest {
 
         // then
         assertThat(applicable).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1,1,4,4", "1,1,4,4", "1,1,5,6", "2,1,4,4", "2,1,5,6"})
+    void 할인이_적용되는_경우의_수량을_반환한다(long quantityToBuy, long quantityToGet, long input, long expected) {
+        // given
+        LocalDate endDate = LocalDate.of(2022, 2, 12);
+        Promotion promotion = new Promotion("할인", 2, 1, endDate.minusDays(1), endDate, PromotionType.DISCOUNT);
+
+        // when
+        long result = promotion.countQuantityToGet(input);
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 }

@@ -27,4 +27,14 @@ public class Promotion {
     public boolean isApplicable(LocalDate orderedDate) {
         return startDate.isBefore(orderedDate) && endDate.isAfter(orderedDate);
     }
+
+    public long countQuantityToGet(long orderedQuantity) {
+        long quantityCondition = quantityToBuy + quantityToGet;
+        long remainingQuantity = orderedQuantity - (orderedQuantity / quantityCondition * quantityCondition);
+
+        if (remainingQuantity == quantityToBuy) {
+            return orderedQuantity + 1;
+        }
+        return orderedQuantity;
+    }
 }
