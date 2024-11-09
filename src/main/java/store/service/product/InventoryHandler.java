@@ -11,4 +11,6 @@ public abstract class InventoryHandler {
     }
 
     public abstract void reduceQuantity(Product product, long orderedQuantity, LocalDateTime orderedAt);
+
+    public abstract void hasEnoughQuantity(Product product, long orderedQuantity, LocalDateTime orderedAt);
 }

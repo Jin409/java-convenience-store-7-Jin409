@@ -1,6 +1,5 @@
 package store.model.promotion;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PromotionItem {

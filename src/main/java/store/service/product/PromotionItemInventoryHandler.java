@@ -17,4 +17,21 @@ public class PromotionItemInventoryHandler extends InventoryHandler {
             next.reduceQuantity(product, remainingOrderedQuantity, orderedAt);
         }
     }
+
+    @Override
+    public void hasEnoughQuantity(Product product, long orderedQuantity, LocalDateTime orderedAt) {
+        long remainingOrderedQuantity = orderedQuantity;
+
+        if (product.isPromotionAvailable(orderedAt)) {
+            remainingOrderedQuantity = product.getRemainingAfterApplyingPromotion(orderedQuantity);
+        }
+
+        if (remainingOrderedQuantity <= 0) {
+            return;
+        }
+
+        if (next != null) {
+            next.hasEnoughQuantity(product, remainingOrderedQuantity, orderedAt);
+        }
+    }
 }

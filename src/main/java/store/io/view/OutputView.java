@@ -44,4 +44,8 @@ public class OutputView {
 
         System.out.printf("내실돈\t\t%-12s\n", String.format("%,d", amountToPay));
     }
+
+    public static void displayErrorMessage(String message) {
+        System.out.println(message);
+    }
 }

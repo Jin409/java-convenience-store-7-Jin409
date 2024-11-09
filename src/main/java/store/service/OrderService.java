@@ -62,6 +62,16 @@ public class OrderService {
         return new PromotionApplyResult(product.getName(), 0, 0);
     }
 
+    public void validateQuantity(List<OrderRegisterDto> orderRegisterDtos) {
+        orderRegisterDtos.forEach(
+                orderRegisterDto -> {
+                    Product product = getProductWithName(orderRegisterDto.nameOfProduct());
+                    inventoryHandler.hasEnoughQuantity(product, orderRegisterDto.quantity(),
+                            orderRegisterDto.orderAt());
+                }
+        );
+    }
+
     private PromotionApplyResult getApplyResult(Product product, OrderRegisterDto orderRegisterDto) {
         long orderedQuantity = orderRegisterDto.quantity();
 

@@ -20,4 +20,13 @@ public class StockItem {
         }
         quantity = quantity - reduceQuantity;
     }
+
+    public long getRemainingAfterReduction(long reduceQuantity) {
+        long originalQuantity = quantity;
+
+        if (reduceQuantity > quantity) {
+            return reduceQuantity - originalQuantity;
+        }
+        return 0;
+    }
 }

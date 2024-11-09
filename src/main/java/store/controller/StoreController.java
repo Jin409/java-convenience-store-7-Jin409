@@ -59,7 +59,7 @@ public class StoreController {
     }
 
     private void processOrders() {
-        List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
+        List<OrderRegisterDto> orderFromCustomer = getOrders();
         for (OrderRegisterDto originDto : orderFromCustomer) {
             OrderRegisterDto validDto = getValidOrderRegisterDto(originDto);
             orderService.processOrder(validDto);
@@ -88,6 +88,18 @@ public class StoreController {
             validDto = handleAdditionalItems(originDto, promotionApplyResult);
         }
         return validDto;
+    }
+
+    private List<OrderRegisterDto> getOrders() {
+        while (true) {
+            try {
+                List<OrderRegisterDto> orderFromCustomer = InputHandler.getOrderFromCustomer();
+                orderService.validateQuantity(orderFromCustomer);
+                return orderFromCustomer;
+            } catch (IllegalArgumentException e) {
+                OutputView.displayErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private OrderRegisterDto handleInsufficientQuantity(OrderRegisterDto originDto,
