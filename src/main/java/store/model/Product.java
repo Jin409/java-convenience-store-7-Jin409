@@ -51,6 +51,10 @@ public class Product {
         return promotionItem.getRemainingAfterReduction(reduceQuantity);
     }
 
+    public void applyPromotionReduction(long reduceQuantity) {
+        promotionItem.reduceQuantity(reduceQuantity);
+    }
+
     public void applyStockReduction(long reduceQuantity) {
         stockItem.reduceQuantity(reduceQuantity);
     }

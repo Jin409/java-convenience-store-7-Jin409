@@ -33,7 +33,6 @@ public class InventoryHandlerTest {
     @Test
     void 할인이_적용되는_경우_할인_재고를_먼저_감소시킨다() {
         // given
-
         Product product = new Product("사이다", 10000, new StockItem(1), new PromotionItem(promotion, 1));
 
         // when

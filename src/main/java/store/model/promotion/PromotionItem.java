@@ -36,4 +36,8 @@ public class PromotionItem {
     public boolean hasEnoughItems(long reduceQuantity) {
         return promotionQuantity >= reduceQuantity;
     }
+
+    public void reduceQuantity(long reduceQuantity) {
+        promotionQuantity = promotionQuantity - reduceQuantity;
+    }
 }
