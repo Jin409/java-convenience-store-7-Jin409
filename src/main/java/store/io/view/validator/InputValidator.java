@@ -7,7 +7,7 @@ public class InputValidator {
     }
 
     private static final String REGEX_OF_KOREAN = "^[가-힣]+$";
-    private static final String REGEX_OF_INTEGER = "[0-9]";
+    private static final String REGEX_OF_INTEGER = "^[0-9]+$";
 
     public static void validateOrdersFromCustomer(List<String> orders) {
         for (String order : orders) {
