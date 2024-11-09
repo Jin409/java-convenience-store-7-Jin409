@@ -37,4 +37,8 @@ public class Promotion {
         }
         return orderedQuantity;
     }
+
+    public long countFreeQuantity(long orderedQuantity) {
+        return orderedQuantity / (quantityToBuy + quantityToGet);
+    }
 }

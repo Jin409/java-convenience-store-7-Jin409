@@ -27,6 +27,12 @@ public class OrderService {
         }
     }
 
+    public long calculateDiscountedPrice(Product product, OrderRegisterDto orderRegisterDto) {
+        long quantity = orderRegisterDto.quantity();
+        Promotion promotion = product.getPromotionItem().getPromotion();
+        return (quantity - promotion.countFreeQuantity(quantity)) * product.getPrice();
+    }
+
     private void applyMembershipDiscount(OrderRegisterDto orderRegisterDto) {
 
     }
