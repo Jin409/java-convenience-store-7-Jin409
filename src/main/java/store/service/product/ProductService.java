@@ -4,6 +4,8 @@ import static store.service.ErrorMessages.ProductService.INVALID_PROMOTION_NAME;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.model.Product;
@@ -23,22 +25,29 @@ public class ProductService {
     }
 
     public void saveProducts(List<ProductRegisterDto> productRegisterDtos) {
-        for (ProductRegisterDto productRegisterDto : productRegisterDtos) {
-            productRepository.save(createProduct(productRegisterDto));
-        }
+        Map<String, List<ProductRegisterDto>> groupedDtos = groupByProductName(productRegisterDtos);
+        groupedDtos.forEach((name, dtos) -> productRepository.save(createProduct(name, dtos)));
     }
 
-    private Product createProduct(ProductRegisterDto productRegisterDto) {
-        StockItem stockItem = null;
-        PromotionItem promotionItem = null;
+    private Map<String, List<ProductRegisterDto>> groupByProductName(List<ProductRegisterDto> dtos) {
+        return dtos.stream().collect(Collectors.groupingBy(ProductRegisterDto::name));
+    }
 
-        if (productRegisterDto.hasPromotion()) {
-            promotionItem = createPromotionItem(productRegisterDto);
-        }
-        if (!productRegisterDto.hasPromotion()) {
-            stockItem = new StockItem(productRegisterDto.quantity());
-        }
-        return new Product(productRegisterDto.name(), productRegisterDto.price(), stockItem, promotionItem);
+    private Product createProduct(String name, List<ProductRegisterDto> productRegisterDtos) {
+        long price = productRegisterDtos.getFirst().price();
+        PromotionItem promotionItem = findPromotionItem(productRegisterDtos);
+        StockItem stockItem = createStockItem(productRegisterDtos);
+        return new Product(name, price, stockItem, promotionItem);
+    }
+
+    private PromotionItem findPromotionItem(List<ProductRegisterDto> dtos) {
+        return dtos.stream().filter(ProductRegisterDto::isPromotion).findFirst().map(this::createPromotionItem)
+                .orElse(null);
+    }
+
+    private StockItem createStockItem(List<ProductRegisterDto> dtos) {
+        return dtos.stream().filter(dto -> !dto.isPromotion()).findFirst().map(dto -> new StockItem(dto.quantity()))
+                .orElse(new StockItem(0));
     }
 
     private PromotionItem createPromotionItem(ProductRegisterDto productRegisterDto) {

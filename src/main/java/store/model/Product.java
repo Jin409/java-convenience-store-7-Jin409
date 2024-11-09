@@ -53,9 +53,5 @@ public class Product {
     public void applyStockReduction(long reduceQuantity) {
         stockItem.reduceQuantity(reduceQuantity);
     }
-
-    public boolean isStockItemUnAvailable() {
-        return stockItem == null;
-    }
 }
 

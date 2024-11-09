@@ -28,7 +28,7 @@ public class AppConfig {
         return new OrderRepositoryImpl();
     }
 
-    public InventoryHandler quantityManagingHandler() {
+    public InventoryHandler inventoryHandler() {
         PromotionItemInventoryHandler promotionItemQuantityManagingHandler = new PromotionItemInventoryHandler();
         StockItemInventoryHandler stockItemQuantityManagingHandler = new StockItemInventoryHandler();
 
@@ -46,7 +46,7 @@ public class AppConfig {
     }
 
     public OrderService orderService() {
-        return new OrderService(productRepository(), quantityManagingHandler());
+        return new OrderService(productRepository(), inventoryHandler());
     }
 
     public StoreController storeController() {
