@@ -20,4 +20,9 @@ public class InputHandler {
         String answer = InputView.askToAddMoreItems(applyResult);
         return AnswerSign.getBySign(answer);
     }
+
+    public static AnswerSign askToBuyWithoutPromotion(PromotionApplyResult applyResult) {
+        String answer = InputView.askToBuyWithoutPromotion(applyResult);
+        return AnswerSign.getBySign(answer);
+    }
 }

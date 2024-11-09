@@ -28,11 +28,12 @@ public class PromotionItem {
         long originalQuantity = promotionQuantity;
 
         if (reduceQuantity > promotionQuantity) {
-            this.promotionQuantity = 0;
             return reduceQuantity - originalQuantity;
         }
-
-        promotionQuantity = promotionQuantity - reduceQuantity;
         return 0;
+    }
+
+    public boolean hasEnoughItems(long reduceQuantity) {
+        return promotionQuantity >= reduceQuantity;
     }
 }

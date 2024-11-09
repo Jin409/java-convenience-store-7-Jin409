@@ -59,10 +59,31 @@ public class StoreController {
 
     private OrderRegisterDto getValidOrderRegisterDto(OrderRegisterDto originDto) {
         PromotionApplyResult promotionApplyResult = orderService.applyPromotion(originDto);
-        if (promotionApplyResult.isInvalid()) {
-            return handleAdditionalItems(originDto, promotionApplyResult);
+        OrderRegisterDto validDto = originDto;
+
+        if (promotionApplyResult.hasQuantityWithoutPromotion()) {
+            return handleInsufficientQuantity(originDto, promotionApplyResult);
+        }
+
+        if (promotionApplyResult.hasMissingOrderQuantity()) {
+            validDto = handleAdditionalItems(originDto, promotionApplyResult);
+        }
+        return validDto;
+    }
+
+    private OrderRegisterDto handleInsufficientQuantity(OrderRegisterDto originDto,
+                                                        PromotionApplyResult promotionApplyResult) {
+        AnswerSign answerSign = InputHandler.askToBuyWithoutPromotion(promotionApplyResult);
+        if (answerSign.meansFalse()) {
+            return createOrderWithOutPromotion(originDto, promotionApplyResult);
         }
         return originDto;
+    }
+
+    private OrderRegisterDto createOrderWithOutPromotion(OrderRegisterDto originDto,
+                                                         PromotionApplyResult promotionApplyResult) {
+        return OrderRegisterDto.copyWithNewQuantity(originDto,
+                originDto.quantity() - promotionApplyResult.getQuantityWithoutPromotion());
     }
 
     private OrderRegisterDto handleAdditionalItems(OrderRegisterDto originDto,
@@ -76,6 +97,7 @@ public class StoreController {
 
     private OrderRegisterDto createOrderWithAdditionalQuantity(OrderRegisterDto originDto,
                                                                PromotionApplyResult promotionApplyResult) {
-        return OrderRegisterDto.from(originDto, promotionApplyResult.getMissingOrderQuantity());
+        return OrderRegisterDto.copyWithNewQuantity(originDto,
+                originDto.quantity() + promotionApplyResult.getMissingOrderQuantity());
     }
 }

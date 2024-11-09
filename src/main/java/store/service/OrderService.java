@@ -27,20 +27,22 @@ public class OrderService {
     public PromotionApplyResult applyPromotion(OrderRegisterDto orderRegisterDto) {
         String nameOfProduct = orderRegisterDto.nameOfProduct();
         Product product = getProductWithName(nameOfProduct);
-
-        if (product.hasPromotion()) {
+        if (product.hasPromotion() && product.isPromotionAvailable(orderRegisterDto.orderAt())) {
             return getApplyResult(product, orderRegisterDto);
         }
-        return new PromotionApplyResult(false, product.getName(), 0);
+        return new PromotionApplyResult(product.getName(), 0, 0);
     }
 
     private PromotionApplyResult getApplyResult(Product product, OrderRegisterDto orderRegisterDto) {
+        long orderedQuantity = orderRegisterDto.quantity();
+
         Promotion promotion = product.getPromotionItem().getPromotion();
-        long missingQuantity = promotion.countQuantityToGet(orderRegisterDto.quantity()) - orderRegisterDto.quantity();
-        if (missingQuantity > 0) {
-            return new PromotionApplyResult(true, product.getName(), missingQuantity);
+        long quantityWithoutPromotion = product.getRemainingAfterApplyingPromotion(orderedQuantity);
+        long missingQuantity = promotion.countQuantityToGet(orderedQuantity) - orderedQuantity;
+        if (product.hasEnoughPromotionItems(orderedQuantity + missingQuantity)) {
+            return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, missingQuantity);
         }
-        return new PromotionApplyResult(false, product.getName(), missingQuantity);
+        return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, 0);
     }
 
     private Product getProductWithName(String name) {

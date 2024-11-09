@@ -54,5 +54,9 @@ public class Product {
     public void applyStockReduction(long reduceQuantity) {
         stockItem.reduceQuantity(reduceQuantity);
     }
+
+    public boolean hasEnoughPromotionItems(long orderedQuantity) {
+        return promotionItem.hasEnoughItems(orderedQuantity);
+    }
 }
 

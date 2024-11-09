@@ -1,18 +1,14 @@
 package store.service;
 
 public class PromotionApplyResult {
-    private final boolean isInvalid;
     private final String nameOfProduct;
+    private final long quantityWithoutPromotion;
     private final long missingOrderQuantity;
 
-    public PromotionApplyResult(boolean isInvalid, String nameOfProduct, long missingOrderQuantity) {
-        this.isInvalid = isInvalid;
+    public PromotionApplyResult(String nameOfProduct, long quantityWithoutPromotion, long missingOrderQuantity) {
         this.nameOfProduct = nameOfProduct;
+        this.quantityWithoutPromotion = quantityWithoutPromotion;
         this.missingOrderQuantity = missingOrderQuantity;
-    }
-
-    public boolean isInvalid() {
-        return isInvalid;
     }
 
     public String getNameOfProduct() {
@@ -21,5 +17,17 @@ public class PromotionApplyResult {
 
     public long getMissingOrderQuantity() {
         return missingOrderQuantity;
+    }
+
+    public boolean hasMissingOrderQuantity() {
+        return missingOrderQuantity > 0;
+    }
+
+    public boolean hasQuantityWithoutPromotion() {
+        return quantityWithoutPromotion > 0;
+    }
+
+    public long getQuantityWithoutPromotion() {
+        return quantityWithoutPromotion;
     }
 }

@@ -28,4 +28,8 @@ AnswerSign {
     public boolean meansTrue() {
         return meaning;
     }
+
+    public boolean meansFalse() {
+        return !meaning;
+    }
 }
