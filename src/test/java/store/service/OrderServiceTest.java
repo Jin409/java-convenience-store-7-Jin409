@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,14 +25,14 @@ import store.model.repository.ProductRepository;
 public class OrderServiceTest {
 
     private OrderService orderService;
-    private LocalDate orderedAt;
+    private LocalDateTime orderedAt;
     private AppConfig appConfig;
 
     @BeforeEach
     void setUp() {
         this.appConfig = new AppConfig();
         this.orderService = appConfig.orderService();
-        this.orderedAt = LocalDate.of(2022, 10, 22);
+        this.orderedAt = LocalDateTime.of(2022, 2, 10, 2, 10);
     }
 
     @Test
@@ -50,8 +51,6 @@ public class OrderServiceTest {
         String name = "사이다";
         long orderedQuantity = 2;
         OrderRegisterDto orderRegisterDto = new OrderRegisterDto(name, orderedQuantity, orderedAt);
-        Promotion promotion = new Promotion("MD추천", 1, 1, orderedAt.minusDays(1), orderedAt.plusDays(1),
-                PromotionType.RECOMMENDATION);
 
         // when & then
         assertThatThrownBy(() -> orderService.processOrder(orderRegisterDto)).isInstanceOf(
@@ -63,13 +62,14 @@ public class OrderServiceTest {
     class TestApplyPromotion {
         private ProductRepository productRepository;
         private Promotion promotion;
-        private LocalDate orderedAt;
+        private LocalDateTime orderedAt;
         private OrderService orderServiceWithCustom;
 
         @BeforeEach
         void setUp() {
-            orderedAt = LocalDate.of(2022, 10, 22);
-            promotion = new Promotion("2+1", 2, 1, orderedAt.minusDays(1), orderedAt.plusDays(1),
+            orderedAt = LocalDate.of(2022, 10, 22).atStartOfDay();
+            promotion = new Promotion("2+1", 2, 1, orderedAt.toLocalDate().minusDays(1),
+                    orderedAt.toLocalDate().plusDays(1),
                     PromotionType.N_PLUS_M);
             productRepository = new ProductRepository() {
                 @Override
@@ -94,7 +94,7 @@ public class OrderServiceTest {
         @Test
         void 프로모션이_적용되어_추가로_가져와야_하는_수량이_있는_경우_알맞은_형태를_반환한다() {
             // given
-            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 2, LocalDate.of(2022, 10, 22));
+            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 2, OrderServiceTest.this.orderedAt);
 
             // when
             PromotionApplyResult promotionApplyResult = orderServiceWithCustom.applyPromotion(orderRegisterDto);
@@ -107,7 +107,7 @@ public class OrderServiceTest {
         @Test
         void 프로모션_재고가_부족해_정가로_결제해야_하는_경우_알맞은_형태를_반환한다() {
             // given
-            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 11, LocalDate.of(2022, 10, 22));
+            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 11, OrderServiceTest.this.orderedAt);
 
             // when
             PromotionApplyResult promotionApplyResult = orderServiceWithCustom.applyPromotion(orderRegisterDto);
@@ -120,7 +120,7 @@ public class OrderServiceTest {
         @Test
         void 프로모션_조건에_따르면_추가적인_재고가_필요하더라도_재고가_부족한_경우_추가로_가져와야_하는_수량을_표시하지_않는다() {
             // given
-            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 9, LocalDate.of(2022, 10, 22));
+            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 9, OrderServiceTest.this.orderedAt);
 
             // when
             PromotionApplyResult promotionApplyResult = orderServiceWithCustom.applyPromotion(orderRegisterDto);

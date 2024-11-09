@@ -1,6 +1,7 @@
 package store.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import store.model.promotion.PromotionItem;
 
 public class Product {
@@ -40,7 +41,7 @@ public class Product {
         return promotionItem;
     }
 
-    public boolean isPromotionAvailable(LocalDate orderedAt) {
+    public boolean isPromotionAvailable(LocalDateTime orderedAt) {
         if (promotionItem == null) {
             return false;
         }

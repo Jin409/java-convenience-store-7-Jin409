@@ -36,7 +36,7 @@ public class OrderService {
     private Order createOrder(Product product, OrderRegisterDto orderRegisterDto) {
         long quantity = orderRegisterDto.quantity();
         long discountedPrice = calculateDiscountedPrice(product, orderRegisterDto);
-        return new Order(product, quantity, orderRegisterDto.orderAt(), discountedPrice);
+        return new Order(product, quantity, discountedPrice);
     }
 
     private long calculateDiscountedPrice(Product product, OrderRegisterDto orderRegisterDto) {

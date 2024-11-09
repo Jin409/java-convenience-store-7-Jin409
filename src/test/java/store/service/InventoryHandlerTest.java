@@ -36,7 +36,7 @@ public class InventoryHandlerTest {
         Product product = new Product("사이다", 10000, new StockItem(1), new PromotionItem(promotion, 1));
 
         // when
-        inventoryHandler.reduceQuantity(product, 1, endAt.minusDays(1));
+        inventoryHandler.reduceQuantity(product, 1, endAt.minusDays(1).atStartOfDay());
 
         // then
         assertAll(() -> assertThat(product.getPromotionItem().getPromotionQuantity()).isEqualTo(0),
@@ -50,7 +50,7 @@ public class InventoryHandlerTest {
         Product product = new Product("사이다", 10000, new StockItem(1), new PromotionItem(promotion, 1));
 
         // when
-        inventoryHandler.reduceQuantity(product, 1, endAt.plusDays(1));
+        inventoryHandler.reduceQuantity(product, 1, endAt.plusDays(1).atStartOfDay());
 
         // then
         assertAll(() -> assertThat(product.getPromotionItem().getPromotionQuantity()).isEqualTo(1),
@@ -64,7 +64,7 @@ public class InventoryHandlerTest {
         Product product = new Product("사이다", 10000, new StockItem(1), new PromotionItem(promotion, 1));
 
         // when & then
-        assertThatThrownBy(() -> inventoryHandler.reduceQuantity(product, 10000, endAt)).isInstanceOf(
+        assertThatThrownBy(() -> inventoryHandler.reduceQuantity(product, 10000, endAt.atStartOfDay())).isInstanceOf(
                 IllegalArgumentException.class).hasMessage(ErrorMessages.StockItem.NOT_ENOUGH_QUANTITY);
     }
 }

@@ -3,7 +3,6 @@ package store.formatter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import store.dto.OrderRegisterDto;
@@ -20,9 +19,9 @@ public class InputFormatterTest {
 
         // then
         assertAll(() -> assertThat(orderRegisterDtos.size()).isEqualTo(2),
-                () -> assertThat(orderRegisterDtos.getFirst()).isEqualTo(
-                        new OrderRegisterDto("사이다", 2L, LocalDate.now())),
-                () -> assertThat(orderRegisterDtos.getLast()).isEqualTo(
-                        new OrderRegisterDto("감자칩", 1L, LocalDate.now())));
+                () -> assertThat(orderRegisterDtos.getFirst().nameOfProduct()).isEqualTo("사이다"),
+                () -> assertThat(orderRegisterDtos.getFirst().quantity()).isEqualTo(2L),
+                () -> assertThat(orderRegisterDtos.getLast().nameOfProduct()).isEqualTo("감자칩"),
+                () -> assertThat(orderRegisterDtos.getLast().quantity()).isEqualTo(1L));
     }
 }

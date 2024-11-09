@@ -1,6 +1,6 @@
 package store.service.product;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import store.model.Product;
 
 public abstract class InventoryHandler {
@@ -10,5 +10,5 @@ public abstract class InventoryHandler {
         this.next = next;
     }
 
-    public abstract void reduceQuantity(Product product, long orderedQuantity, LocalDate orderedAt);
+    public abstract void reduceQuantity(Product product, long orderedQuantity, LocalDateTime orderedAt);
 }

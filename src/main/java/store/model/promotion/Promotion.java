@@ -1,6 +1,7 @@
 package store.model.promotion;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Promotion {
     private final String name;
@@ -24,8 +25,9 @@ public class Promotion {
         return name;
     }
 
-    public boolean isApplicable(LocalDate orderedDate) {
-        return startDate.isBefore(orderedDate) && endDate.isAfter(orderedDate);
+    public boolean isApplicable(LocalDateTime orderedDate) {
+        LocalDate orderedLocalDate = orderedDate.toLocalDate();
+        return !startDate.isAfter(orderedLocalDate) && !endDate.isBefore(orderedLocalDate);
     }
 
     public long countQuantityToGet(long orderedQuantity) {

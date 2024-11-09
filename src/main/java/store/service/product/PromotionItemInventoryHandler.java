@@ -1,11 +1,11 @@
 package store.service.product;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import store.model.Product;
 
 public class PromotionItemInventoryHandler extends InventoryHandler {
     @Override
-    public void reduceQuantity(Product product, long orderedQuantity, LocalDate orderedAt) {
+    public void reduceQuantity(Product product, long orderedQuantity, LocalDateTime orderedAt) {
         long remainingOrderedQuantity = orderedQuantity;
 
         if (product.isPromotionAvailable(orderedAt)) {

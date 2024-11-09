@@ -1,6 +1,7 @@
 package store.model.promotion;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PromotionItem {
 
@@ -20,7 +21,7 @@ public class PromotionItem {
         return promotionQuantity;
     }
 
-    public boolean isApplicable(LocalDate orderedAt) {
+    public boolean isApplicable(LocalDateTime orderedAt) {
         return promotion.isApplicable(orderedAt);
     }
 

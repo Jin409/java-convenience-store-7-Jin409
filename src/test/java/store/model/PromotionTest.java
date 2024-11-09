@@ -17,7 +17,7 @@ public class PromotionTest {
         Promotion promotion = new Promotion("할인", 1, 1, endDate.minusDays(1), endDate, PromotionType.DISCOUNT);
 
         // when
-        boolean applicable = promotion.isApplicable(endDate.plusDays(1));
+        boolean applicable = promotion.isApplicable(endDate.plusDays(1).atStartOfDay());
 
         // then
         assertThat(applicable).isFalse();
