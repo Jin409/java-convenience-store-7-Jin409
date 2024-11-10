@@ -1,13 +1,13 @@
 package store;
 
 import store.config.AppConfig;
-import store.controller.StoreController;
+import store.controller.StoreControllerFacade;
 
 public class Application {
     public static void main(String[] args) {
         AppConfig appConfig = new AppConfig();
 
-        StoreController storeController = appConfig.storeController();
-        storeController.run();
+        StoreControllerFacade storeControllerFacade = appConfig.storeControllerFacade();
+        storeControllerFacade.run();
     }
 }

@@ -1,6 +1,10 @@
 package store.config;
 
-import store.controller.StoreController;
+import store.controller.OrderController;
+import store.controller.ProductController;
+import store.controller.PromotionController;
+import store.controller.ReceiptController;
+import store.controller.StoreControllerFacade;
 import store.model.repository.OrderRepository;
 import store.model.repository.OrderRepositoryImpl;
 import store.model.repository.ProductRepository;
@@ -59,8 +63,24 @@ public class AppConfig {
         return new ReceiptService();
     }
 
-    public StoreController storeController() {
-        return new StoreController(promotionService(), productService(), orderService(), membershipDiscountService(),
-                receiptService());
+    public PromotionController promotionController() {
+        return new PromotionController(promotionService());
+    }
+
+    public ProductController productController() {
+        return new ProductController(productService());
+    }
+
+    public OrderController orderController() {
+        return new OrderController(orderService(), membershipDiscountService());
+    }
+
+    public ReceiptController receiptController() {
+        return new ReceiptController(receiptService());
+    }
+
+    public StoreControllerFacade storeControllerFacade() {
+        return new StoreControllerFacade(promotionController(), productController(), orderController(),
+                receiptController());
     }
 }
