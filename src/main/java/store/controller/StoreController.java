@@ -7,7 +7,8 @@ import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.dto.PromotionRegisterDto;
 import store.handler.InputHandler;
-import store.io.MarkDownReader;
+import store.io.ProductReader;
+import store.io.PromotionReader;
 import store.io.view.OutputView;
 import store.model.Orders;
 import store.service.MembershipDiscountService;
@@ -44,12 +45,12 @@ public class StoreController {
     }
 
     private void savePromotions() {
-        List<PromotionRegisterDto> promotionRegisterDtos = MarkDownReader.readPromotions();
+        List<PromotionRegisterDto> promotionRegisterDtos = PromotionReader.readPromotions();
         promotionService.savePromotions(promotionRegisterDtos);
     }
 
     private void saveProducts() {
-        List<ProductRegisterDto> productRegisterDtos = MarkDownReader.readProducts();
+        List<ProductRegisterDto> productRegisterDtos = ProductReader.readProducts();
         productService.saveProducts(productRegisterDtos);
     }
 
