@@ -7,26 +7,38 @@ import store.dto.ReceiptDto.FreeItem;
 import store.dto.ReceiptDto.OrderedProduct;
 import store.dto.ReceiptDto.PaymentSummary;
 import store.model.Order;
-import store.model.Orders;
+import store.model.Receipt;
+import store.model.repository.OrderRepository;
 
 public class ReceiptService {
-    public ReceiptDto getReceipt(Orders orders) {
-        List<ReceiptDto.OrderedProduct> orderedProducts = getOrderedProduct(orders);
-        List<ReceiptDto.FreeItem> freeItems = getFreeItems(orders);
-        PaymentSummary paymentSummary = getPaymentSummary(orderedProducts, orders);
+    private final OrderRepository orderRepository;
+
+    public ReceiptService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
+    public Receipt createReceiptWithoutDiscount() {
+        List<Order> orders = orderRepository.findAll();
+        return new Receipt(orders, 0);
+    }
+
+    public ReceiptDto getReceipt(Receipt receipt) {
+        List<ReceiptDto.OrderedProduct> orderedProducts = getOrderedProduct(receipt);
+        List<ReceiptDto.FreeItem> freeItems = getFreeItems(receipt);
+        PaymentSummary paymentSummary = getPaymentSummary(orderedProducts, receipt);
         return new ReceiptDto(orderedProducts, freeItems, paymentSummary);
     }
 
-    private List<ReceiptDto.OrderedProduct> getOrderedProduct(Orders orders) {
-        return orders.getOrders().stream()
+    private List<ReceiptDto.OrderedProduct> getOrderedProduct(Receipt receipt) {
+        return receipt.getOrders().stream()
                 .map(order -> new OrderedProduct(order.getProduct().getName(), order.getQuantity(),
                         order.getProduct().getPrice())).toList();
     }
 
-    private List<ReceiptDto.FreeItem> getFreeItems(Orders orders) {
+    private List<ReceiptDto.FreeItem> getFreeItems(Receipt receipt) {
         List<ReceiptDto.FreeItem> freeItems = new ArrayList<>();
 
-        for (Order order : orders.getOrders()) {
+        for (Order order : receipt.getOrders()) {
             if (order.getDiscountedPrice() <= 0) {
                 continue;
             }
@@ -36,10 +48,10 @@ public class ReceiptService {
     }
 
     private ReceiptDto.PaymentSummary getPaymentSummary(List<ReceiptDto.OrderedProduct> orderedProducts,
-                                                        Orders orders) {
+                                                        Receipt receipt) {
         long totalPrice = orderedProducts.stream().mapToLong(product -> product.price() * product.quantity()).sum();
-        long totalDiscountedAmount = orders.getOrders().stream().mapToLong(Order::getDiscountedPrice).sum();
-        long membershipDiscountedAmount = orders.getMembershipDiscountedAmount();
+        long totalDiscountedAmount = receipt.getOrders().stream().mapToLong(Order::getDiscountedPrice).sum();
+        long membershipDiscountedAmount = receipt.getMembershipDiscountedAmount();
         return new PaymentSummary(totalPrice, totalDiscountedAmount, membershipDiscountedAmount);
     }
 }

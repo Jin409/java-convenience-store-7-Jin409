@@ -4,7 +4,6 @@ import java.util.List;
 import store.dto.OrderRegisterDto;
 import store.handler.ErrorHandler;
 import store.handler.InputHandler;
-import store.model.Orders;
 import store.service.MembershipDiscountService;
 import store.service.OrderService;
 import store.service.PromotionApplyResult;
@@ -31,14 +30,6 @@ public class OrderController {
             OrderRegisterDto validDto = getValidOrderRegisterDto(originDto);
             orderService.processOrder(validDto);
         }
-    }
-
-    public Orders getProcessedOrders() {
-        AnswerSign answerSign = InputHandler.askToApplyMembershipDiscount();
-        if (answerSign.meansTrue()) {
-            return membershipDiscountService.getOrdersWithMembershipDiscount();
-        }
-        return orderService.createOrders();
     }
 
     private List<OrderRegisterDto> getOrders() {

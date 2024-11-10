@@ -3,10 +3,8 @@ package store.service;
 
 import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
 
-import java.util.List;
 import store.dto.OrderRegisterDto;
 import store.model.Order;
-import store.model.Orders;
 import store.model.Product;
 import store.model.promotion.Promotion;
 import store.model.repository.OrderRepository;
@@ -50,10 +48,5 @@ public class OrderService {
             return promotion.countFreeQuantity(quantity) * product.getPrice();
         }
         return 0;
-    }
-
-    public Orders createOrders() {
-        List<Order> orders = orderRepository.findAll();
-        return new Orders(orders, 0);
     }
 }

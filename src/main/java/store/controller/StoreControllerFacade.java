@@ -2,7 +2,7 @@ package store.controller;
 
 import store.handler.ErrorHandler;
 import store.handler.InputHandler;
-import store.model.Orders;
+import store.model.Receipt;
 
 public class StoreControllerFacade {
     private final PromotionController promotionController;
@@ -25,8 +25,7 @@ public class StoreControllerFacade {
             do {
                 productController.displayInformation();
                 orderController.processOrders();
-                Orders orders = orderController.getProcessedOrders();
-                receiptController.displayReceipt(orders);
+                displayReceipt();
             } while (InputHandler.askToContinue().meansTrue());
         } catch (Exception e) {
             ErrorHandler.handle(e);
@@ -36,5 +35,10 @@ public class StoreControllerFacade {
     private void readyToOpen() {
         promotionController.savePromotions();
         productController.saveProducts();
+    }
+
+    private void displayReceipt() {
+        Receipt receipt = receiptController.getReceipt();
+        receiptController.displayReceipt(receipt);
     }
 }

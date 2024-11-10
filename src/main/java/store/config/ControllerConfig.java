@@ -27,7 +27,7 @@ public class ControllerConfig {
     }
 
     public ReceiptController receiptController() {
-        return new ReceiptController(serviceConfig.receiptService());
+        return new ReceiptController(serviceConfig.receiptService(), serviceConfig.membershipDiscountService());
     }
 
 }

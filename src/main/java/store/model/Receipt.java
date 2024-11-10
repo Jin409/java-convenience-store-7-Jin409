@@ -3,11 +3,11 @@ package store.model;
 import java.util.Collections;
 import java.util.List;
 
-public class Orders {
+public class Receipt {
     private final List<Order> orders;
     private final long membershipDiscountedAmount;
 
-    public Orders(List<Order> orders, long membershipDiscountedAmount) {
+    public Receipt(List<Order> orders, long membershipDiscountedAmount) {
         this.orders = orders;
         this.membershipDiscountedAmount = membershipDiscountedAmount;
     }

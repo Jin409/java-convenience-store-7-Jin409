@@ -34,6 +34,6 @@ public class ServiceConfig {
     }
 
     public ReceiptService receiptService() {
-        return new ReceiptService();
+        return new ReceiptService(repositoryConfig.orderRepository());
     }
 }
