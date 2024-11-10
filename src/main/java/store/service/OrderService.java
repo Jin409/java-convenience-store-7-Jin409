@@ -33,6 +33,10 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    private Product getProductWithName(String name) {
+        return productRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException(INVALID_PRODUCT));
+    }
+
     private Order createOrder(Product product, OrderRegisterDto orderRegisterDto) {
         long quantity = orderRegisterDto.quantity();
         long discountedPrice = calculateDiscountedPrice(product, orderRegisterDto);
@@ -51,40 +55,5 @@ public class OrderService {
     public Orders createOrders() {
         List<Order> orders = orderRepository.findAll();
         return new Orders(orders, 0);
-    }
-
-    public PromotionApplyResult applyPromotion(OrderRegisterDto orderRegisterDto) {
-        String nameOfProduct = orderRegisterDto.nameOfProduct();
-        Product product = getProductWithName(nameOfProduct);
-        if (product.hasPromotion() && product.isPromotionAvailable(orderRegisterDto.orderAt())) {
-            return getApplyResult(product, orderRegisterDto);
-        }
-        return new PromotionApplyResult(product.getName(), 0, 0);
-    }
-
-    public void validateQuantity(List<OrderRegisterDto> orderRegisterDtos) {
-        orderRegisterDtos.forEach(
-                orderRegisterDto -> {
-                    Product product = getProductWithName(orderRegisterDto.nameOfProduct());
-                    inventoryHandler.hasEnoughQuantity(product, orderRegisterDto.quantity(),
-                            orderRegisterDto.orderAt());
-                }
-        );
-    }
-
-    private PromotionApplyResult getApplyResult(Product product, OrderRegisterDto orderRegisterDto) {
-        long orderedQuantity = orderRegisterDto.quantity();
-
-        Promotion promotion = product.getPromotionItem().getPromotion();
-        long quantityWithoutPromotion = product.getRemainingAfterApplyingPromotion(orderedQuantity);
-        long missingQuantity = promotion.countQuantityToGet(orderedQuantity) - orderedQuantity;
-        if (product.hasEnoughPromotionItems(orderedQuantity + missingQuantity)) {
-            return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, missingQuantity);
-        }
-        return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, 0);
-    }
-
-    private Product getProductWithName(String name) {
-        return productRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException(INVALID_PRODUCT));
     }
 }

@@ -1,11 +1,13 @@
 package store.service.product;
 
+import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
 import static store.service.ErrorMessages.ProductService.INVALID_PROMOTION_NAME;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import store.dto.OrderRegisterDto;
 import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.model.Product;
@@ -18,10 +20,13 @@ import store.model.repository.PromotionRepository;
 public class ProductService {
     private final ProductRepository productRepository;
     private final PromotionRepository promotionRepository;
+    private final InventoryHandler inventoryHandler;
 
-    public ProductService(ProductRepository productRepository, PromotionRepository promotionRepository) {
+    public ProductService(ProductRepository productRepository, PromotionRepository promotionRepository,
+                          InventoryHandler inventoryHandler) {
         this.productRepository = productRepository;
         this.promotionRepository = promotionRepository;
+        this.inventoryHandler = inventoryHandler;
     }
 
     public void saveProducts(List<ProductRegisterDto> productRegisterDtos) {
@@ -84,5 +89,20 @@ public class ProductService {
 
     private ProductDisplayDto.Stock createStockDisplayDto(Product product) {
         return new ProductDisplayDto.Stock(product.getName(), product.getPrice(), product.getStockItem().getQuantity());
+    }
+
+
+    public void validateQuantity(List<OrderRegisterDto> orderRegisterDtos) {
+        orderRegisterDtos.forEach(
+                orderRegisterDto -> {
+                    Product product = getProductWithName(orderRegisterDto.nameOfProduct());
+                    inventoryHandler.hasEnoughQuantity(product, orderRegisterDto.quantity(),
+                            orderRegisterDto.orderAt());
+                }
+        );
+    }
+
+    private Product getProductWithName(String name) {
+        return productRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException(INVALID_PRODUCT));
     }
 }

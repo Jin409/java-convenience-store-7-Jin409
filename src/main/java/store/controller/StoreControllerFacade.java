@@ -1,5 +1,6 @@
 package store.controller;
 
+import store.handler.ErrorHandler;
 import store.handler.InputHandler;
 import store.model.Orders;
 
@@ -18,14 +19,22 @@ public class StoreControllerFacade {
     }
 
     public void run() {
+        try {
+            readyToOpen();
+
+            do {
+                productController.displayInformation();
+                orderController.processOrders();
+                Orders orders = orderController.getProcessedOrders();
+                receiptController.displayReceipt(orders);
+            } while (InputHandler.askToContinue().meansTrue());
+        } catch (Exception e) {
+            ErrorHandler.handle(e);
+        }
+    }
+
+    private void readyToOpen() {
         promotionController.savePromotions();
         productController.saveProducts();
-
-        do {
-            productController.displayInformation();
-            orderController.processOrders();
-            Orders orders = orderController.getProcessedOrders();
-            receiptController.displayReceipt(orders);
-        } while (InputHandler.askToContinue().meansTrue());
     }
 }

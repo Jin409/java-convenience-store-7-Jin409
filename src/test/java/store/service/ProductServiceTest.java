@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import store.config.AppConfig;
+import store.config.InventoryHandlerConfig;
 import store.config.RepositoryConfig;
 import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
@@ -35,7 +36,8 @@ public class ProductServiceTest {
             }
         };
 
-        ProductService productService = new ProductService(new ProductRepositoryImpl(), promotionRepository);
+        ProductService productService = new ProductService(new ProductRepositoryImpl(), promotionRepository,
+                new InventoryHandlerConfig().inventoryHandler());
         List<ProductRegisterDto> productRegisterDtos = List.of(
                 new ProductRegisterDto("상품명", 1, 1, "존재하지 않는 프로모션", true));
 
@@ -61,7 +63,8 @@ public class ProductServiceTest {
             }
         };
         ProductService productService = new ProductService(
-                new RepositoryConfig().productRepository(), fakePromotionRepository
+                new RepositoryConfig().productRepository(), fakePromotionRepository,
+                new InventoryHandlerConfig().inventoryHandler()
         );
         List<ProductRegisterDto> productRegisterDtos = List.of(new ProductRegisterDto("사이다", 1000, 10, "반짝 세일", true),
                 new ProductRegisterDto("사이다", 1000, 10, "null", false));

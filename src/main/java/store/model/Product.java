@@ -1,6 +1,5 @@
 package store.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import store.model.promotion.PromotionItem;
 
@@ -60,7 +59,7 @@ public class Product {
         stockItem.reduceQuantity(reduceQuantity);
     }
 
-    public boolean hasEnoughPromotionItems(long orderedQuantity) {
+    public boolean hasEnoughPromotionQuantityFor(long orderedQuantity) {
         return promotionItem.hasEnoughItems(orderedQuantity);
     }
 }

@@ -1,15 +1,22 @@
 package store.service;
 
+import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
+
 import java.util.List;
+import store.dto.OrderRegisterDto;
 import store.dto.PromotionRegisterDto;
+import store.model.Product;
 import store.model.promotion.Promotion;
+import store.model.repository.ProductRepository;
 import store.model.repository.PromotionRepository;
 
 public class PromotionService {
     private final PromotionRepository promotionRepository;
+    private final ProductRepository productRepository;
 
-    public PromotionService(PromotionRepository promotionRepository) {
+    public PromotionService(PromotionRepository promotionRepository, ProductRepository productRepository) {
         this.promotionRepository = promotionRepository;
+        this.productRepository = productRepository;
     }
 
     public void savePromotions(List<PromotionRegisterDto> promotionRegisterDtos) {
@@ -18,4 +25,30 @@ public class PromotionService {
                         dto.endDate())).toList();
         promotions.forEach(promotionRepository::save);
     }
+
+    public PromotionApplyResult applyPromotion(OrderRegisterDto orderRegisterDto) {
+        String nameOfProduct = orderRegisterDto.nameOfProduct();
+        Product product = getProductWithName(nameOfProduct);
+        if (product.hasPromotion() && product.isPromotionAvailable(orderRegisterDto.orderAt())) {
+            return getPromotionAppliedResult(product, orderRegisterDto);
+        }
+        return new PromotionApplyResult(product.getName(), 0, 0);
+    }
+
+    private Product getProductWithName(String name) {
+        return productRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException(INVALID_PRODUCT));
+    }
+
+    private PromotionApplyResult getPromotionAppliedResult(Product product, OrderRegisterDto orderRegisterDto) {
+        long orderedQuantity = orderRegisterDto.quantity();
+        Promotion promotion = product.getPromotionItem().getPromotion();
+
+        long quantityWithoutPromotion = product.getRemainingAfterApplyingPromotion(orderedQuantity);
+        long missingQuantity = promotion.countQuantityToGet(orderedQuantity) - orderedQuantity;
+        if (product.hasEnoughPromotionQuantityFor(orderedQuantity + missingQuantity)) {
+            return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, missingQuantity);
+        }
+        return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, 0);
+    }
+
 }

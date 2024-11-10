@@ -16,11 +16,12 @@ public class ServiceConfig {
     }
 
     public PromotionService promotionService() {
-        return new PromotionService(repositoryConfig.promotionRepository());
+        return new PromotionService(repositoryConfig.promotionRepository(), repositoryConfig.productRepository());
     }
 
     public ProductService productService() {
-        return new ProductService(repositoryConfig.productRepository(), repositoryConfig.promotionRepository());
+        return new ProductService(repositoryConfig.productRepository(), repositoryConfig.promotionRepository(),
+                inventoryHandlerConfig.inventoryHandler());
     }
 
     public OrderService orderService() {
