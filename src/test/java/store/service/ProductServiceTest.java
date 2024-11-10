@@ -13,7 +13,6 @@ import store.config.AppConfig;
 import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.model.promotion.Promotion;
-import store.model.promotion.PromotionType;
 import store.model.repository.ProductRepositoryImpl;
 import store.model.repository.PromotionRepository;
 import store.service.product.ProductService;
@@ -57,8 +56,7 @@ public class ProductServiceTest {
             @Override
             public Optional<Promotion> findByName(String name) {
                 return Optional.of(
-                        new Promotion("반짝 세일", 1, 1, LocalDate.of(2022, 10, 10), LocalDate.of(2022, 10, 10),
-                                PromotionType.DISCOUNT));
+                        new Promotion("반짝 세일", 1, 1, LocalDate.of(2022, 10, 10), LocalDate.of(2022, 10, 10)));
             }
         };
         ProductService productService = new ProductService(

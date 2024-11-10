@@ -13,7 +13,6 @@ import store.model.Product;
 import store.model.promotion.Promotion;
 import store.model.promotion.PromotionItem;
 import store.model.StockItem;
-import store.model.promotion.PromotionType;
 import store.service.product.InventoryHandler;
 
 public class InventoryHandlerTest {
@@ -27,7 +26,7 @@ public class InventoryHandlerTest {
         AppConfig appConfig = new AppConfig();
         this.inventoryHandler = appConfig.inventoryHandler();
         this.endAt = LocalDate.of(2022, 10, 1);
-        this.promotion = new Promotion("MD 추천", 1, 1, endAt.minusDays(2), endAt, PromotionType.RECOMMENDATION);
+        this.promotion = new Promotion("MD 추천", 1, 1, endAt.minusDays(2), endAt);
     }
 
     @Test

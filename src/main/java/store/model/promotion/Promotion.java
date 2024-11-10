@@ -9,16 +9,13 @@ public class Promotion {
     private final int quantityToGet;
     private final LocalDate startDate;
     private final LocalDate endDate;
-    private final PromotionType promotionType;
 
-    public Promotion(String name, int quantityToBuy, int quantityToGet, LocalDate startDate, LocalDate endDate,
-                     PromotionType promotionType) {
+    public Promotion(String name, int quantityToBuy, int quantityToGet, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.quantityToBuy = quantityToBuy;
         this.quantityToGet = quantityToGet;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.promotionType = promotionType;
     }
 
     public String getName() {

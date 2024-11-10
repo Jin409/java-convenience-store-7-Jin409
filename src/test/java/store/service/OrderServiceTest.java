@@ -18,7 +18,6 @@ import store.model.Product;
 import store.model.StockItem;
 import store.model.promotion.Promotion;
 import store.model.promotion.PromotionItem;
-import store.model.promotion.PromotionType;
 import store.model.repository.OrderRepositoryImpl;
 import store.model.repository.ProductRepository;
 
@@ -69,7 +68,7 @@ public class OrderServiceTest {
         void setUp() {
             orderedAt = LocalDate.of(2022, 10, 22).atStartOfDay();
             promotion = new Promotion("2+1", 2, 1, orderedAt.toLocalDate().minusDays(1),
-                    orderedAt.toLocalDate().plusDays(1), PromotionType.N_PLUS_M);
+                    orderedAt.toLocalDate().plusDays(1));
             productRepository = new ProductRepository() {
                 @Override
                 public void save(Product product) {
