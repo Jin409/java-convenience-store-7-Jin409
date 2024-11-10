@@ -41,7 +41,7 @@ public class StoreController {
         do {
             displayInformation();
             processOrders();
-        } while (InputHandler.askToLeave().meansTrue());
+        } while (InputHandler.askToContinue().meansTrue());
     }
 
     private void savePromotions() {

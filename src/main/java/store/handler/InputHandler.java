@@ -30,7 +30,7 @@ public class InputHandler {
         return AnswerSign.getBySign(InputView.askToApplyMembershipDiscount());
     }
 
-    public static AnswerSign askToLeave() {
-        return AnswerSign.getBySign(InputView.askToLeave());
+    public static AnswerSign askToContinue() {
+        return AnswerSign.getBySign(InputView.askToContinue());
     }
 }
