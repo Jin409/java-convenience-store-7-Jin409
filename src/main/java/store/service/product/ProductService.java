@@ -41,13 +41,21 @@ public class ProductService {
     }
 
     private PromotionItem findPromotionItem(List<ProductRegisterDto> dtos) {
-        return dtos.stream().filter(ProductRegisterDto::isPromotion).findFirst().map(this::createPromotionItem)
-                .orElse(null);
+        for (ProductRegisterDto dto : dtos) {
+            if (dto.isPromotion()) {
+                return createPromotionItem(dto);
+            }
+        }
+        return null;
     }
 
     private StockItem createStockItem(List<ProductRegisterDto> dtos) {
-        return dtos.stream().filter(dto -> !dto.isPromotion()).findFirst().map(dto -> new StockItem(dto.quantity()))
-                .orElse(new StockItem(0));
+        for (ProductRegisterDto dto : dtos) {
+            if (!dto.isPromotion()) {
+                return new StockItem(dto.quantity());
+            }
+        }
+        return new StockItem(0);
     }
 
     private PromotionItem createPromotionItem(ProductRegisterDto productRegisterDto) {
@@ -62,18 +70,19 @@ public class ProductService {
 
         for (Product product : products) {
             if (product.hasPromotion()) {
-                ProductDisplayDto.Promotion productDisplayDto = new ProductDisplayDto.Promotion(product.getName(),
-                        product.getPrice(), product.getPromotionItem().getPromotion().getName(),
-                        product.getPromotionItem().getPromotionQuantity());
-                productDisplayDtos.add(productDisplayDto);
+                productDisplayDtos.add(createPromotionDisplayDto(product));
             }
-            if (product.hasStock()) {
-                ProductDisplayDto.Stock productDisplayDto = new ProductDisplayDto.Stock(product.getName(),
-                        product.getPrice(), product.getStockItem().getQuantity());
-                productDisplayDtos.add(productDisplayDto);
-            }
+            productDisplayDtos.add(createStockDisplayDto(product));
         }
-
         return productDisplayDtos;
+    }
+
+    private ProductDisplayDto.Promotion createPromotionDisplayDto(Product product) {
+        return new ProductDisplayDto.Promotion(product.getName(), product.getPrice(),
+                product.getPromotionItem().getPromotion().getName(), product.getPromotionItem().getPromotionQuantity());
+    }
+
+    private ProductDisplayDto.Stock createStockDisplayDto(Product product) {
+        return new ProductDisplayDto.Stock(product.getName(), product.getPrice(), product.getStockItem().getQuantity());
     }
 }
