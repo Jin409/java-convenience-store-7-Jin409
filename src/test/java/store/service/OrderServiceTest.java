@@ -69,8 +69,7 @@ public class OrderServiceTest {
         void setUp() {
             orderedAt = LocalDate.of(2022, 10, 22).atStartOfDay();
             promotion = new Promotion("2+1", 2, 1, orderedAt.toLocalDate().minusDays(1),
-                    orderedAt.toLocalDate().plusDays(1),
-                    PromotionType.N_PLUS_M);
+                    orderedAt.toLocalDate().plusDays(1), PromotionType.N_PLUS_M);
             productRepository = new ProductRepository() {
                 @Override
                 public void save(Product product) {
@@ -94,7 +93,7 @@ public class OrderServiceTest {
         @Test
         void 프로모션이_적용되어_추가로_가져와야_하는_수량이_있는_경우_알맞은_형태를_반환한다() {
             // given
-            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 2, OrderServiceTest.this.orderedAt);
+            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 2, orderedAt);
 
             // when
             PromotionApplyResult promotionApplyResult = orderServiceWithCustom.applyPromotion(orderRegisterDto);
@@ -107,7 +106,7 @@ public class OrderServiceTest {
         @Test
         void 프로모션_재고가_부족해_정가로_결제해야_하는_경우_알맞은_형태를_반환한다() {
             // given
-            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 11, OrderServiceTest.this.orderedAt);
+            OrderRegisterDto orderRegisterDto = new OrderRegisterDto("사이다", 11, orderedAt);
 
             // when
             PromotionApplyResult promotionApplyResult = orderServiceWithCustom.applyPromotion(orderRegisterDto);
