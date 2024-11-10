@@ -12,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import store.config.AppConfig;
+import store.config.InventoryHandlerConfig;
+import store.config.RepositoryConfig;
+import store.config.ServiceConfig;
 import store.dto.OrderRegisterDto;
 import store.model.Product;
 import store.model.StockItem;
@@ -25,12 +27,12 @@ public class OrderServiceTest {
 
     private OrderService orderService;
     private LocalDateTime orderedAt;
-    private AppConfig appConfig;
+    private ServiceConfig serviceConfig;
 
     @BeforeEach
     void setUp() {
-        this.appConfig = new AppConfig();
-        this.orderService = appConfig.orderService();
+        this.serviceConfig = new ServiceConfig(new RepositoryConfig(), new InventoryHandlerConfig());
+        this.orderService = serviceConfig.orderService();
         this.orderedAt = LocalDateTime.of(2022, 2, 10, 2, 10);
     }
 
@@ -85,7 +87,8 @@ public class OrderServiceTest {
                     return Optional.of(new Product("사이다", 1000, new StockItem(1), new PromotionItem(promotion, 10)));
                 }
             };
-            orderServiceWithCustom = new OrderService(productRepository, appConfig.inventoryHandler(),
+            orderServiceWithCustom = new OrderService(productRepository,
+                    new InventoryHandlerConfig().inventoryHandler(),
                     new OrderRepositoryImpl());
         }
 

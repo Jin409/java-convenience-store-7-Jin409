@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import store.config.AppConfig;
+import store.config.InventoryHandlerConfig;
 import store.model.ErrorMessages;
 import store.model.Product;
+import store.model.StockItem;
 import store.model.promotion.Promotion;
 import store.model.promotion.PromotionItem;
-import store.model.StockItem;
 import store.service.product.InventoryHandler;
 
 public class InventoryHandlerTest {
@@ -23,8 +23,7 @@ public class InventoryHandlerTest {
 
     @BeforeEach
     void setUp() {
-        AppConfig appConfig = new AppConfig();
-        this.inventoryHandler = appConfig.inventoryHandler();
+        this.inventoryHandler = new InventoryHandlerConfig().inventoryHandler();
         this.endAt = LocalDate.of(2022, 10, 1);
         this.promotion = new Promotion("MD 추천", 1, 1, endAt.minusDays(2), endAt);
     }

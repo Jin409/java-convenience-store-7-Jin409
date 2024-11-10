@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import store.config.AppConfig;
+import store.config.RepositoryConfig;
 import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
 import store.model.promotion.Promotion;
@@ -60,7 +61,7 @@ public class ProductServiceTest {
             }
         };
         ProductService productService = new ProductService(
-                appConfig.productRepository(), fakePromotionRepository
+                new RepositoryConfig().productRepository(), fakePromotionRepository
         );
         List<ProductRegisterDto> productRegisterDtos = List.of(new ProductRegisterDto("사이다", 1000, 10, "반짝 세일", true),
                 new ProductRegisterDto("사이다", 1000, 10, "null", false));
