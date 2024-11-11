@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     private static void printFreeItems(ReceiptDto receiptDto) {
-        System.out.println("=============증정=============");
+        System.out.println("=============증\t\t정=============");
         for (ReceiptDto.FreeItem freeItem : receiptDto.getFreeItems()) {
             System.out.println(OutputFormatter.formatFreeItem(freeItem));
         }
