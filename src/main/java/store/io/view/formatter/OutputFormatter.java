@@ -80,17 +80,17 @@ public class OutputFormatter {
     }
 
     private static String formatPromotionDiscountResult(ReceiptDto receiptDto) {
-        return String.format("행사할인\t\t%-5s",
-                String.format("%,d", receiptDto.getPaymentSummary().promotionDiscountedPrice() * -1));
+        return String.format("행사할인\t\t\t\t%-5s",
+                String.format("-%,d", receiptDto.getPaymentSummary().promotionDiscountedPrice()));
     }
 
     private static String formatMembershipDiscountResult(ReceiptDto receiptDto) {
-        return String.format("멤버십할인\t%-10s",
-                String.format("%,d", receiptDto.getPaymentSummary().membershipDiscountedPrice() * -1));
+        return String.format("멤버십할인\t\t\t\t%-10s",
+                String.format("-%,d", receiptDto.getPaymentSummary().membershipDiscountedPrice()));
     }
 
     private static String formatAmountPay(PaymentSummary paymentSummary) {
-        return String.format("내실돈\t\t%-12s", String.format("%,d",
+        return String.format("내실돈\t\t\t\t%-12s", String.format("%,d",
                 paymentSummary.totalPrice() - paymentSummary.promotionDiscountedPrice()
                         - paymentSummary.membershipDiscountedPrice()));
     }

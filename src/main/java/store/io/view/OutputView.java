@@ -13,6 +13,7 @@ public class OutputView {
 
         List<String> information = OutputFormatter.formatInformationOfProducts(productDisplayDtos);
         information.forEach(System.out::println);
+        System.out.println();
     }
 
     public static void displayReceipt(ReceiptDto receiptDto) {
@@ -24,7 +25,7 @@ public class OutputView {
 
     private static void printHeader() {
         System.out.println("==============W 편의점================");
-        System.out.println("상품명\t\t수량\t금액");
+        System.out.println("상품명\t\t수량\t\t금액");
     }
 
     private static void printOrderedProducts(ReceiptDto receiptDto) {
