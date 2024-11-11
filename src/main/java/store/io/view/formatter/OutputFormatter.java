@@ -55,6 +55,7 @@ public class OutputFormatter {
     private static void formatQuantity(StringJoiner stringJoiner, long quantity) {
         if (quantity == 0) {
             stringJoiner.add("재고 없음");
+            return;
         }
         stringJoiner.add(quantity + "개");
     }
