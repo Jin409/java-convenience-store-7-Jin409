@@ -25,6 +25,12 @@ public class ReceiptDto {
         return freeItems;
     }
 
+    public long countTotalOrderedQuantity() {
+        return orderedProducts.stream()
+                .mapToLong(OrderedProduct::quantity)
+                .sum();
+    }
+
     public record OrderedProduct(String nameOfProduct, long quantity, long price) {
     }
 

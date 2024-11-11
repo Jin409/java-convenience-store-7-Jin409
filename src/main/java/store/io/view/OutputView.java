@@ -21,7 +21,7 @@ public class OutputView {
         System.out.println("상품명\t\t수량\t금액");
         for (ReceiptDto.OrderedProduct orderedProduct : receiptDto.getOrderedProducts()) {
             System.out.printf("%-10s\t%-5d\t%-12s\n", orderedProduct.nameOfProduct(), orderedProduct.quantity(),
-                    String.format("%,d", orderedProduct.price()));
+                    String.format("%,d", orderedProduct.quantity() * orderedProduct.price()));
         }
 
         System.out.println("=============증정=============");
@@ -35,17 +35,13 @@ public class OutputView {
         long amountToPay = paymentSummary.totalPrice() - paymentSummary.promotionDiscountedPrice()
                 - paymentSummary.membershipDiscountedPrice();
 
-        System.out.printf("총구매액\t\t%-5d\t%-12s\n", receiptDto.getOrderedProducts().size(),
+        System.out.printf("총구매액\t\t%-5d\t%-12s\n", receiptDto.countTotalOrderedQuantity(),
                 String.format("%,d", paymentSummary.totalPrice()));
 
-        System.out.printf("행사할인\t\t%-5d\n", paymentSummary.promotionDiscountedPrice());
+        System.out.printf("행사할인\t\t%-5s\n", String.format("%,d", paymentSummary.promotionDiscountedPrice() * -1));
 
-        System.out.printf("멤버십할인\t%-10d\n", paymentSummary.membershipDiscountedPrice());
+        System.out.printf("멤버십할인\t%-10s\n", String.format("%,d", paymentSummary.membershipDiscountedPrice() * -1));
 
         System.out.printf("내실돈\t\t%-12s\n", String.format("%,d", amountToPay));
-    }
-
-    public static void displayErrorMessage(String message) {
-        System.out.println(message);
     }
 }
