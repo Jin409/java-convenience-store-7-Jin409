@@ -1,6 +1,7 @@
 package store.handler;
 
 import java.util.List;
+import java.util.function.Supplier;
 import store.controller.AnswerSign;
 import store.dto.OrderRegisterDto;
 import store.io.view.Constants;
@@ -11,26 +12,36 @@ import store.service.PromotionApplyResult;
 
 public class InputHandler {
     public static List<OrderRegisterDto> getOrderFromCustomer() {
-        String ordersFromCustomer = InputView.getOrderFromCustomer();
+        String ordersFromCustomer = retryOnInvalidInput(InputView::getOrderFromCustomer);
         InputValidator.validateOrdersFromCustomer(List.of(ordersFromCustomer.split(Constants.DELIMITER)));
         return InputFormatter.fromInputToOrdersBeSaved(ordersFromCustomer);
     }
 
     public static AnswerSign askToAddMoreItems(PromotionApplyResult applyResult) {
-        String answer = InputView.askToAddMoreItems(applyResult);
+        String answer = retryOnInvalidInput(() -> InputView.askToAddMoreItems(applyResult));
         return AnswerSign.getBySign(answer);
     }
 
     public static AnswerSign askToBuyWithoutPromotion(PromotionApplyResult applyResult) {
-        String answer = InputView.askToBuyWithoutPromotion(applyResult);
+        String answer = retryOnInvalidInput(() -> InputView.askToBuyWithoutPromotion(applyResult));
         return AnswerSign.getBySign(answer);
     }
 
     public static AnswerSign askToApplyMembershipDiscount() {
-        return AnswerSign.getBySign(InputView.askToApplyMembershipDiscount());
+        return retryOnInvalidInput(() -> AnswerSign.getBySign(InputView.askToApplyMembershipDiscount()));
     }
 
     public static AnswerSign askToContinue() {
-        return AnswerSign.getBySign(InputView.askToContinue());
+        return retryOnInvalidInput(() -> AnswerSign.getBySign(InputView.askToContinue()));
+    }
+
+    private static <T> T retryOnInvalidInput(Supplier<T> inputSupplier) {
+        while (true) {
+            try {
+                return inputSupplier.get();
+            } catch (IllegalArgumentException e) {
+                ErrorHandler.handle(e);
+            }
+        }
     }
 }
