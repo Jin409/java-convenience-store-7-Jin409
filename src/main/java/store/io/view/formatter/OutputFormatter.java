@@ -52,46 +52,45 @@ public class OutputFormatter {
         return stringJoiner.toString();
     }
 
-    private static StringJoiner formatQuantity(StringJoiner stringJoiner, long quantity) {
+    private static void formatQuantity(StringJoiner stringJoiner, long quantity) {
         if (quantity == 0) {
             stringJoiner.add("재고 없음");
-            return stringJoiner;
         }
         stringJoiner.add(quantity + "개");
-        return stringJoiner;
     }
 
     public static String formatOrderedProducts(ReceiptDto.OrderedProduct orderedProduct) {
-        return String.format("%-10s\t%-5d\t%-12s",
-                orderedProduct.nameOfProduct(),
-                orderedProduct.quantity(),
+        return String.format("%-10s\t%-5d\t%-12s", orderedProduct.nameOfProduct(), orderedProduct.quantity(),
                 String.format("%,d", orderedProduct.quantity() * orderedProduct.price()));
     }
 
     public static String formatFreeItem(ReceiptDto.FreeItem freeItem) {
-        return String.format("%-10s\t%-5d",
-                freeItem.nameOfProduct(),
-                freeItem.quantity());
+        return String.format("%-10s\t%-5d", freeItem.nameOfProduct(), freeItem.quantity());
     }
 
     public static List<String> formatPaymentSummary(ReceiptDto receiptDto) {
-        PaymentSummary paymentSummary = receiptDto.getPaymentSummary();
-
-        long amountToPay = paymentSummary.totalPrice() - paymentSummary.promotionDiscountedPrice()
-                - paymentSummary.membershipDiscountedPrice();
-
-        String totalPurchase = String.format("총구매액\t\t%-5d\t%-12s",
-                receiptDto.countTotalOrderedQuantity(),
-                String.format("%,d", paymentSummary.totalPrice()));
-        String promotionDiscount = String.format("행사할인\t\t%-5s",
-                String.format("%,d", paymentSummary.promotionDiscountedPrice() * -1));
-
-        String membershipDiscount = String.format("멤버십할인\t%-10s",
-                String.format("%,d", paymentSummary.membershipDiscountedPrice() * -1));
-
-        String amountToPayString = String.format("내실돈\t\t%-12s",
-                String.format("%,d", amountToPay));
-        return List.of(totalPurchase, promotionDiscount, membershipDiscount, amountToPayString);
+        return List.of(formatTotalPurchase(receiptDto), formatPromotionDiscountResult(receiptDto),
+                formatMembershipDiscountResult(receiptDto), formatAmountPay(receiptDto.getPaymentSummary()));
     }
 
+    private static String formatTotalPurchase(ReceiptDto receiptDto) {
+        return String.format("총구매액\t\t%-5d\t%-12s", receiptDto.countTotalOrderedQuantity(),
+                String.format("%,d", receiptDto.getPaymentSummary().totalPrice()));
+    }
+
+    private static String formatPromotionDiscountResult(ReceiptDto receiptDto) {
+        return String.format("행사할인\t\t%-5s",
+                String.format("%,d", receiptDto.getPaymentSummary().promotionDiscountedPrice() * -1));
+    }
+
+    private static String formatMembershipDiscountResult(ReceiptDto receiptDto) {
+        return String.format("멤버십할인\t%-10s",
+                String.format("%,d", receiptDto.getPaymentSummary().membershipDiscountedPrice() * -1));
+    }
+
+    private static String formatAmountPay(PaymentSummary paymentSummary) {
+        return String.format("내실돈\t\t%-12s", String.format("%,d",
+                paymentSummary.totalPrice() - paymentSummary.promotionDiscountedPrice()
+                        - paymentSummary.membershipDiscountedPrice()));
+    }
 }

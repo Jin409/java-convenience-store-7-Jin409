@@ -11,27 +11,47 @@ public class InputValidator {
 
     public static void validateOrdersFromCustomer(List<String> orders) {
         for (String order : orders) {
-            if (hasInvalidFormat(order)) {
-                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_ORDER_FORMAT);
-            }
+            validateOrderFormat(order);
+            validateOrderDashPresence(order);
 
-            if (doesNotHaveDash(order)) {
-                throw new IllegalArgumentException(InputValidatorErrorMessages.ORDER_MISSING_DASH);
-            }
+            String[] replacedOrder = removeBracketsAndSplitOrder(order);
+            validateOrderLength(replacedOrder);
+            validateKoreanProductName(replacedOrder[0]);
+            validateQuantity(replacedOrder[1]);
+        }
+    }
 
-            String[] replacedOrder = order.replaceAll("[\\[\\]]", "").split("-");
+    private static void validateOrderFormat(String order) {
+        if (hasInvalidFormat(order)) {
+            throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_ORDER_FORMAT);
+        }
+    }
 
-            if (replacedOrder.length != 2) {
-                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_ORDER_FORMAT);
-            }
+    private static void validateOrderDashPresence(String order) {
+        if (doesNotHaveDash(order)) {
+            throw new IllegalArgumentException(InputValidatorErrorMessages.ORDER_MISSING_DASH);
+        }
+    }
 
-            if (isNotKorean(replacedOrder[0])) {
-                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_KOREAN_PRODUCT_NAME);
-            }
+    private static String[] removeBracketsAndSplitOrder(String order) {
+        return order.replaceAll("[\\[\\]]", "").split("-");
+    }
 
-            if (isNotInteger(replacedOrder[1])) {
-                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_QUANTITY);
-            }
+    private static void validateOrderLength(String[] replacedOrder) {
+        if (replacedOrder.length != 2) {
+            throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_ORDER_FORMAT);
+        }
+    }
+
+    private static void validateKoreanProductName(String productName) {
+        if (isNotKorean(productName)) {
+            throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_KOREAN_PRODUCT_NAME);
+        }
+    }
+
+    private static void validateQuantity(String quantity) {
+        if (isNotInteger(quantity)) {
+            throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_QUANTITY);
         }
     }
 
@@ -51,4 +71,3 @@ public class InputValidator {
         return !input.matches(REGEX_OF_KOREAN);
     }
 }
-

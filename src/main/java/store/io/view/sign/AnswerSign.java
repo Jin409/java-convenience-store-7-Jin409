@@ -22,7 +22,6 @@ AnswerSign {
                 .filter(answerSign -> answerSign.sign.equals(inputSign))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_ANSWER_SIGN));
-
     }
 
     public boolean meansTrue() {
