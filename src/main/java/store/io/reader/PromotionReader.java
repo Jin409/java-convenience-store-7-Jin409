@@ -1,4 +1,4 @@
-package store.io;
+package store.io.reader;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

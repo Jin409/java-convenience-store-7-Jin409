@@ -3,7 +3,7 @@ package store.controller;
 import java.util.List;
 import store.dto.ProductDisplayDto;
 import store.dto.ProductRegisterDto;
-import store.io.ProductReader;
+import store.io.reader.ProductReader;
 import store.io.view.OutputView;
 import store.service.product.ProductService;
 

@@ -1,4 +1,4 @@
-package store.io;
+package store.io.reader;
 
 import java.util.ArrayList;
 import java.util.List;

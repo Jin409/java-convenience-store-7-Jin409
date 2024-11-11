@@ -2,7 +2,7 @@ package store.controller;
 
 import java.util.List;
 import store.dto.PromotionRegisterDto;
-import store.io.PromotionReader;
+import store.io.reader.PromotionReader;
 import store.service.PromotionService;
 
 public class PromotionController {
