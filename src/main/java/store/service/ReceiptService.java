@@ -22,7 +22,7 @@ public class ReceiptService {
         this.receiptRepository = receiptRepository;
     }
 
-    public void createReceiptWithoutDiscount(long discountedAmount) {
+    public void createReceipt(long discountedAmount) {
         List<Order> orders = orderRepository.findNotPrintedOrders();
         Receipt receipt = new Receipt(orders, discountedAmount);
         receiptRepository.save(receipt);

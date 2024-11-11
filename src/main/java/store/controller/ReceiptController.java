@@ -22,7 +22,7 @@ public class ReceiptController {
         if (answerSign.meansTrue()) {
             discountedAmount = membershipDiscountService.calculateDiscountedAmount();
         }
-        receiptService.createReceiptWithoutDiscount(discountedAmount);
+        receiptService.createReceipt(discountedAmount);
     }
 
     public void displayReceipt() {
