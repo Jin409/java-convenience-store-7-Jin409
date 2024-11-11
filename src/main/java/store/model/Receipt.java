@@ -9,6 +9,10 @@ public class Receipt {
 
     public Receipt(List<Order> orders, long membershipDiscountedAmount) {
         this.orders = orders;
+        if (orders.stream().mapToLong(Order::getDiscountedPrice).sum() > membershipDiscountedAmount) {
+            this.membershipDiscountedAmount = 0;
+            return;
+        }
         this.membershipDiscountedAmount = membershipDiscountedAmount;
     }
 
