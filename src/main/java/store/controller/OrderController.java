@@ -6,7 +6,7 @@ import store.handler.ErrorHandler;
 import store.handler.InputHandler;
 import store.io.view.sign.AnswerSign;
 import store.service.OrderService;
-import store.service.PromotionApplyResult;
+import store.dto.PromotionApplyResult;
 import store.service.PromotionService;
 import store.service.product.ProductService;
 

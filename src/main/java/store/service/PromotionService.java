@@ -4,6 +4,7 @@ import static store.service.ServiceErrorMessages.OfOrderService.INVALID_PRODUCT;
 
 import java.util.List;
 import store.dto.OrderRegisterDto;
+import store.dto.PromotionApplyResult;
 import store.dto.PromotionRegisterDto;
 import store.model.Product;
 import store.model.promotion.Promotion;

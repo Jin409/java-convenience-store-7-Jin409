@@ -1,7 +1,7 @@
 package store.io.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import store.service.PromotionApplyResult;
+import store.dto.PromotionApplyResult;
 
 public class InputView {
     public static String getOrderFromCustomer() {

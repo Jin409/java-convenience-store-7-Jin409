@@ -8,7 +8,7 @@ import store.io.view.Constants;
 import store.io.view.InputView;
 import store.io.view.formatter.InputFormatter;
 import store.io.view.validator.InputValidator;
-import store.service.PromotionApplyResult;
+import store.dto.PromotionApplyResult;
 
 public class InputHandler {
     public static List<OrderRegisterDto> getOrderFromCustomer() {

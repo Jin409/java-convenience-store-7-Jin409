@@ -1,4 +1,4 @@
-package store.service;
+package store.dto;
 
 public class PromotionApplyResult {
     private final String nameOfProduct;
