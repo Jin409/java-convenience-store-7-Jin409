@@ -12,7 +12,7 @@ public class MembershipDiscountService {
     }
 
     private static final long MAXIMUM_DISCOUNT_AMOUNT = 8_000;
-    private static final long DISCOUNT_UNIT = 8_000;
+    private static final long DISCOUNT_UNIT = 1_000;
     private static final double DISCOUNTED_RATE = 0.3;
 
     public long calculateDiscountedAmount() {
