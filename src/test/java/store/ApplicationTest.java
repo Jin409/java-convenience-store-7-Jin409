@@ -49,7 +49,7 @@ class ApplicationTest extends NsTest {
     void 멤버십_할인_적용_테스트() {
         assertSimpleTest(() -> {
             runException("[콜라-3],[에너지바-5]", "Y", "N");
-            assertThat(output()).contains("내실돈9,000");
+            assertThat(output().replaceAll("\\s", "")).contains("내실돈9,000");
         });
     }
 
