@@ -65,7 +65,6 @@ public class OrderController {
         return originDto;
     }
 
-
     private OrderRegisterDto handleAdditionalItems(OrderRegisterDto originDto,
                                                    PromotionApplyResult promotionApplyResult) {
         AnswerSign answerSign = InputHandler.askToAddMoreItems(promotionApplyResult);

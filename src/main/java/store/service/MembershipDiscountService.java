@@ -11,16 +11,17 @@ public class MembershipDiscountService {
         this.orderRepository = orderRepository;
     }
 
-    private static final long MAXIMUM_MEMBERSHIP_DISCOUNTED = 8_000;
+    private static final long MAXIMUM_DISCOUNT_AMOUNT = 8_000;
+    private static final long DISCOUNT_UNIT = 8_000;
     private static final double DISCOUNTED_RATE = 0.3;
 
     public long calculateDiscountedAmount() {
         List<Order> orders = orderRepository.findAll();
         long totalOriginalPrice = orders.stream().mapToLong(Order::getOriginalPrice).sum();
-        long discountedAmount = (long) (totalOriginalPrice * DISCOUNTED_RATE) / 1_000 * 1_000;
-        if (discountedAmount < MAXIMUM_MEMBERSHIP_DISCOUNTED) {
+        long discountedAmount = (long) (totalOriginalPrice * DISCOUNTED_RATE) / DISCOUNT_UNIT * DISCOUNT_UNIT;
+        if (discountedAmount < MAXIMUM_DISCOUNT_AMOUNT) {
             return discountedAmount;
         }
-        return MAXIMUM_MEMBERSHIP_DISCOUNTED;
+        return MAXIMUM_DISCOUNT_AMOUNT;
     }
 }
