@@ -16,19 +16,32 @@ public class OutputView {
     }
 
     public static void displayReceipt(ReceiptDto receiptDto) {
-        System.out.println("==============W 편의점================");
+        printHeader();
+        printOrderedProducts(receiptDto);
+        printFreeItems(receiptDto);
+        printPaymentSummary(receiptDto);
+    }
 
+    private static void printHeader() {
+        System.out.println("==============W 편의점================");
         System.out.println("상품명\t\t수량\t금액");
+    }
+
+    private static void printOrderedProducts(ReceiptDto receiptDto) {
         for (ReceiptDto.OrderedProduct orderedProduct : receiptDto.getOrderedProducts()) {
             System.out.printf("%-10s\t%-5d\t%-12s\n", orderedProduct.nameOfProduct(), orderedProduct.quantity(),
                     String.format("%,d", orderedProduct.quantity() * orderedProduct.price()));
         }
+    }
 
+    private static void printFreeItems(ReceiptDto receiptDto) {
         System.out.println("=============증정=============");
         for (ReceiptDto.FreeItem freeItem : receiptDto.getFreeItems()) {
             System.out.printf("%-10s\t%-5d\n", freeItem.nameOfProduct(), freeItem.quantity());
         }
+    }
 
+    private static void printPaymentSummary(ReceiptDto receiptDto) {
         System.out.println("====================================");
         ReceiptDto.PaymentSummary paymentSummary = receiptDto.getPaymentSummary();
 
@@ -37,11 +50,8 @@ public class OutputView {
 
         System.out.printf("총구매액\t\t%-5d\t%-12s\n", receiptDto.countTotalOrderedQuantity(),
                 String.format("%,d", paymentSummary.totalPrice()));
-
         System.out.printf("행사할인\t\t%-5s\n", String.format("%,d", paymentSummary.promotionDiscountedPrice() * -1));
-
         System.out.printf("멤버십할인\t%-10s\n", String.format("%,d", paymentSummary.membershipDiscountedPrice() * -1));
-
         System.out.printf("내실돈\t\t%-12s\n", String.format("%,d", amountToPay));
     }
 }
