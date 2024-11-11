@@ -4,6 +4,7 @@ import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
 import static store.service.ErrorMessages.ProductService.INVALID_PROMOTION_NAME;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,7 +36,11 @@ public class ProductService {
     }
 
     private Map<String, List<ProductRegisterDto>> groupByProductName(List<ProductRegisterDto> dtos) {
-        return dtos.stream().collect(Collectors.groupingBy(ProductRegisterDto::name));
+        return dtos.stream().collect(Collectors.groupingBy(
+                ProductRegisterDto::name,
+                LinkedHashMap::new,
+                Collectors.toList()
+        ));
     }
 
     private Product createProduct(String name, List<ProductRegisterDto> productRegisterDtos) {
