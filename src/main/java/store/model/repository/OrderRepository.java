@@ -7,4 +7,8 @@ public interface OrderRepository {
     void save(Order order);
 
     List<Order> findAll();
+
+    List<Order> findNotPrintedOrders();
+
+    void updateToAllPrinted();
 }

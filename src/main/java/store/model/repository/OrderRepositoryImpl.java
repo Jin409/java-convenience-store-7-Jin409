@@ -21,4 +21,16 @@ public class OrderRepositoryImpl implements OrderRepository {
     public List<Order> findAll() {
         return Collections.unmodifiableList(orders);
     }
+
+    @Override
+    public List<Order> findNotPrintedOrders() {
+        return orders.stream()
+                .filter(Order::isNotPrinted)
+                .toList();
+    }
+
+    @Override
+    public void updateToAllPrinted() {
+        orders.forEach(Order::updateToPrinted);
+    }
 }

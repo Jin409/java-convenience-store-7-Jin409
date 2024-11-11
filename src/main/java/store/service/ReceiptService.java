@@ -1,5 +1,7 @@
 package store.service;
 
+import static store.service.ErrorMessages.ReceiptService.NO_REGISTERED_RECEIPT;
+
 import java.util.ArrayList;
 import java.util.List;
 import store.dto.ReceiptDto;
@@ -9,20 +11,27 @@ import store.dto.ReceiptDto.PaymentSummary;
 import store.model.Order;
 import store.model.Receipt;
 import store.model.repository.OrderRepository;
+import store.model.repository.ReceiptRepository;
 
 public class ReceiptService {
     private final OrderRepository orderRepository;
+    private final ReceiptRepository receiptRepository;
 
-    public ReceiptService(OrderRepository orderRepository) {
+    public ReceiptService(OrderRepository orderRepository, ReceiptRepository receiptRepository) {
         this.orderRepository = orderRepository;
+        this.receiptRepository = receiptRepository;
     }
 
-    public Receipt createReceiptWithoutDiscount() {
-        List<Order> orders = orderRepository.findAll();
-        return new Receipt(orders, 0);
+    public void createReceiptWithoutDiscount(long discountedAmount) {
+        List<Order> orders = orderRepository.findNotPrintedOrders();
+        Receipt receipt = new Receipt(orders, discountedAmount);
+        receiptRepository.save(receipt);
+        orderRepository.updateToAllPrinted();
     }
 
-    public ReceiptDto getReceipt(Receipt receipt) {
+    public ReceiptDto getRecentReceipt() {
+        Receipt receipt = receiptRepository.findRecentReceipt()
+                .orElseThrow(() -> new IllegalArgumentException(NO_REGISTERED_RECEIPT));
         List<ReceiptDto.OrderedProduct> orderedProducts = getOrderedProduct(receipt);
         List<ReceiptDto.FreeItem> freeItems = getFreeItems(receipt);
         PaymentSummary paymentSummary = getPaymentSummary(orderedProducts, receipt);

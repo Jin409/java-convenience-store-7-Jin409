@@ -6,6 +6,8 @@ import store.model.repository.ProductRepository;
 import store.model.repository.ProductRepositoryImpl;
 import store.model.repository.PromotionRepository;
 import store.model.repository.PromotionRepositoryImpl;
+import store.model.repository.ReceiptRepository;
+import store.model.repository.ReceiptRepositoryImpl;
 
 public class RepositoryConfig {
     public PromotionRepository promotionRepository() {
@@ -18,5 +20,9 @@ public class RepositoryConfig {
 
     public OrderRepository orderRepository() {
         return new OrderRepositoryImpl();
+    }
+
+    public ReceiptRepository receiptRepository() {
+        return new ReceiptRepositoryImpl();
     }
 }

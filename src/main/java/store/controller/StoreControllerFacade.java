@@ -2,7 +2,6 @@ package store.controller;
 
 import store.handler.ErrorHandler;
 import store.handler.InputHandler;
-import store.model.Receipt;
 
 public class StoreControllerFacade {
     private final PromotionController promotionController;
@@ -38,7 +37,7 @@ public class StoreControllerFacade {
     }
 
     private void displayReceipt() {
-        Receipt receipt = receiptController.getReceipt();
-        receiptController.displayReceipt(receipt);
+        receiptController.createReceipt();
+        receiptController.displayReceipt();
     }
 }

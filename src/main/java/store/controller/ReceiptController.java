@@ -2,7 +2,6 @@ package store.controller;
 
 import store.handler.InputHandler;
 import store.io.view.OutputView;
-import store.model.Receipt;
 import store.service.MembershipDiscountService;
 import store.service.ReceiptService;
 
@@ -15,15 +14,17 @@ public class ReceiptController {
         this.membershipDiscountService = membershipDiscountService;
     }
 
-    public Receipt getReceipt() {
+    public void createReceipt() {
         AnswerSign answerSign = InputHandler.askToApplyMembershipDiscount();
+
+        long discountedAmount = 0;
         if (answerSign.meansTrue()) {
-            return membershipDiscountService.getOrdersWithMembershipDiscount();
+            discountedAmount = membershipDiscountService.calculateDiscountedAmount();
         }
-        return receiptService.createReceiptWithoutDiscount();
+        receiptService.createReceiptWithoutDiscount(discountedAmount);
     }
 
-    public void displayReceipt(Receipt receipt) {
-        OutputView.displayReceipt(receiptService.getReceipt(receipt));
+    public void displayReceipt() {
+        OutputView.displayReceipt(receiptService.getRecentReceipt());
     }
 }

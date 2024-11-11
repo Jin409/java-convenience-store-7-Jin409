@@ -17,4 +17,11 @@ public final class ErrorMessages {
 
         public static final String INVALID_PRODUCT = "[ERROR] 존재하지 않는 상품명입니다";
     }
+
+    public final class ReceiptService {
+        private ReceiptService() {
+        }
+
+        public static final String NO_REGISTERED_RECEIPT = "[ERROR] 등록된 영수증이 없습니다.";
+    }
 }
