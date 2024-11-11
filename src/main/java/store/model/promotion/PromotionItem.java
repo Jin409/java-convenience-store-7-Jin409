@@ -40,4 +40,8 @@ public class PromotionItem {
     public void reduceQuantity(long reduceQuantity) {
         promotionQuantity = promotionQuantity - reduceQuantity;
     }
+
+    public long countPromotionApplicableQuantity() {
+        return promotion.countApplicablePromotionQuantity(promotionQuantity);
+    }
 }

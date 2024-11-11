@@ -27,7 +27,12 @@ public class Promotion {
         return !startDate.isAfter(orderedLocalDate) && !endDate.isBefore(orderedLocalDate);
     }
 
-    public long countQuantityToGet(long orderedQuantity) {
+    public long countApplicablePromotionQuantity(long orderedQuantity) {
+        int promotionCycle = quantityToBuy + quantityToGet;
+        return orderedQuantity / promotionCycle * promotionCycle;
+    }
+
+    public long countQuantityToGetInTotal(long orderedQuantity) {
         long quantityCondition = quantityToBuy + quantityToGet;
         long remainingQuantity = orderedQuantity - (orderedQuantity / quantityCondition * quantityCondition);
 

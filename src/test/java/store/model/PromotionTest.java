@@ -24,13 +24,13 @@ public class PromotionTest {
 
     @ParameterizedTest
     @CsvSource({"1,1,4,4", "1,1,4,4", "1,1,5,6", "2,1,4,4", "2,1,5,6"})
-    void 할인이_적용되는_경우의_수량을_반환한다(long quantityToBuy, long quantityToGet, long input, long expected) {
+    void 할인이_적용되는_경우의_수량을_반환한다(int quantityToBuy, int quantityToGet, long input, long expected) {
         // given
         LocalDate endDate = LocalDate.of(2022, 2, 12);
-        Promotion promotion = new Promotion("할인", 2, 1, endDate.minusDays(1), endDate);
+        Promotion promotion = new Promotion("할인", quantityToBuy, quantityToGet, endDate.minusDays(1), endDate);
 
         // when
-        long result = promotion.countQuantityToGet(input);
+        long result = promotion.countQuantityToGetInTotal(input);
 
         // then
         assertThat(result).isEqualTo(expected);

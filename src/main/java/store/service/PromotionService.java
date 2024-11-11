@@ -7,6 +7,7 @@ import store.dto.OrderRegisterDto;
 import store.dto.PromotionRegisterDto;
 import store.model.Product;
 import store.model.promotion.Promotion;
+import store.model.promotion.PromotionItem;
 import store.model.repository.ProductRepository;
 import store.model.repository.PromotionRepository;
 
@@ -41,10 +42,11 @@ public class PromotionService {
 
     private PromotionApplyResult getPromotionAppliedResult(Product product, OrderRegisterDto orderRegisterDto) {
         long orderedQuantity = orderRegisterDto.quantity();
-        Promotion promotion = product.getPromotionItem().getPromotion();
+        PromotionItem promotionItem = product.getPromotionItem();
+        Promotion promotion = promotionItem.getPromotion();
 
-        long quantityWithoutPromotion = product.getRemainingAfterApplyingPromotion(orderedQuantity);
-        long missingQuantity = promotion.countQuantityToGet(orderedQuantity) - orderedQuantity;
+        long quantityWithoutPromotion = orderedQuantity - promotionItem.countPromotionApplicableQuantity();
+        long missingQuantity = promotion.countQuantityToGetInTotal(orderedQuantity) - orderedQuantity;
         if (product.hasEnoughPromotionQuantityFor(orderedQuantity + missingQuantity)) {
             return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, missingQuantity);
         }
