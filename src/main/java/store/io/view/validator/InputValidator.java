@@ -12,25 +12,25 @@ public class InputValidator {
     public static void validateOrdersFromCustomer(List<String> orders) {
         for (String order : orders) {
             if (hasInvalidFormat(order)) {
-                throw new IllegalArgumentException("Invalid order format: " + order);
+                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_ORDER_FORMAT);
             }
 
             if (doesNotHaveDash(order)) {
-                throw new IllegalArgumentException("Invalid order format: " + order);
+                throw new IllegalArgumentException(InputValidatorErrorMessages.ORDER_MISSING_DASH);
             }
 
             String[] replacedOrder = order.replaceAll("[\\[\\]]", "").split("-");
 
             if (replacedOrder.length != 2) {
-                throw new IllegalArgumentException("Invalid order format: " + order);
+                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_ORDER_FORMAT);
             }
 
             if (isNotKorean(replacedOrder[0])) {
-                throw new IllegalArgumentException("Invalid order format: " + order);
+                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_KOREAN_PRODUCT_NAME);
             }
 
             if (isNotInteger(replacedOrder[1])) {
-                throw new IllegalArgumentException("Invalid order format: " + order);
+                throw new IllegalArgumentException(InputValidatorErrorMessages.INVALID_QUANTITY);
             }
         }
     }
