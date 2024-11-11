@@ -52,5 +52,4 @@ public class PromotionService {
         }
         return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, 0);
     }
-
 }

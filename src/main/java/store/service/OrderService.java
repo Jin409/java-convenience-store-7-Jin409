@@ -6,7 +6,6 @@ import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
 import store.dto.OrderRegisterDto;
 import store.model.Order;
 import store.model.Product;
-import store.model.promotion.Promotion;
 import store.model.repository.OrderRepository;
 import store.model.repository.ProductRepository;
 import store.service.product.InventoryHandler;
@@ -26,8 +25,8 @@ public class OrderService {
     public void processOrder(OrderRegisterDto orderRegisterDto) {
         String nameOfProduct = orderRegisterDto.nameOfProduct();
         Product product = getProductWithName(nameOfProduct);
-        inventoryHandler.reduceQuantity(product, orderRegisterDto.quantity(), orderRegisterDto.orderAt());
         Order order = createOrder(product, orderRegisterDto);
+        inventoryHandler.reduceQuantity(product, orderRegisterDto.quantity(), orderRegisterDto.orderAt());
         orderRepository.save(order);
     }
 
@@ -44,8 +43,7 @@ public class OrderService {
     private long calculateDiscountedPrice(Product product, OrderRegisterDto orderRegisterDto) {
         long quantity = orderRegisterDto.quantity();
         if (product.isPromotionAvailable(orderRegisterDto.orderAt())) {
-            Promotion promotion = product.getPromotionItem().getPromotion();
-            return promotion.countFreeQuantity(quantity) * product.getPrice();
+            return product.getPromotionItem().countFreeQuantity(quantity) * product.getPrice();
         }
         return 0;
     }

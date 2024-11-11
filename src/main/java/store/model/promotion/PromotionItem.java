@@ -38,10 +38,21 @@ public class PromotionItem {
     }
 
     public void reduceQuantity(long reduceQuantity) {
+        if (promotionQuantity < reduceQuantity) {
+            promotionQuantity = 0;
+            return;
+        }
         promotionQuantity = promotionQuantity - reduceQuantity;
     }
 
     public long countPromotionApplicableQuantity() {
         return promotion.countApplicablePromotionQuantity(promotionQuantity);
+    }
+
+    public long countFreeQuantity(long orderedQuantity) {
+        if (orderedQuantity < promotionQuantity) {
+            return promotion.countFreeQuantity(orderedQuantity);
+        }
+        return promotion.countFreeQuantity(promotionQuantity);
     }
 }

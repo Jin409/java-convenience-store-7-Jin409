@@ -37,7 +37,7 @@ public class Promotion {
         long remainingQuantity = orderedQuantity - (orderedQuantity / quantityCondition * quantityCondition);
 
         if (remainingQuantity == quantityToBuy) {
-            return orderedQuantity + 1;
+            return orderedQuantity + remainingQuantity;
         }
         return orderedQuantity;
     }
