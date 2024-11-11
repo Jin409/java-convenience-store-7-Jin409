@@ -1,4 +1,4 @@
-package store.controller;
+package store.io.view.sign;
 
 public class AnswerSignErrorMessages {
     private AnswerSignErrorMessages() {

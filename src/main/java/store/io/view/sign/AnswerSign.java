@@ -1,6 +1,6 @@
-package store.controller;
+package store.io.view.sign;
 
-import static store.controller.AnswerSignErrorMessages.INVALID_ANSWER_SIGN;
+import static store.io.view.sign.AnswerSignErrorMessages.INVALID_ANSWER_SIGN;
 
 import java.util.Arrays;
 
