@@ -4,7 +4,6 @@ import java.util.List;
 import store.dto.OrderRegisterDto;
 import store.handler.ErrorHandler;
 import store.handler.InputHandler;
-import store.service.MembershipDiscountService;
 import store.service.OrderService;
 import store.service.PromotionApplyResult;
 import store.service.PromotionService;
@@ -13,14 +12,12 @@ import store.service.product.ProductService;
 public class OrderController {
     private final OrderService orderService;
     private final ProductService productService;
-    private final MembershipDiscountService membershipDiscountService;
     private final PromotionService promotionService;
 
     public OrderController(OrderService orderService, ProductService productService,
-                           MembershipDiscountService membershipDiscountService, PromotionService promotionService) {
+                           PromotionService promotionService) {
         this.orderService = orderService;
         this.productService = productService;
-        this.membershipDiscountService = membershipDiscountService;
         this.promotionService = promotionService;
     }
 

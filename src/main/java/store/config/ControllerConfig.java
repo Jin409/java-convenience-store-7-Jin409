@@ -22,7 +22,6 @@ public class ControllerConfig {
 
     public OrderController orderController() {
         return new OrderController(serviceConfig.orderService(), serviceConfig.productService(),
-                serviceConfig.membershipDiscountService(),
                 serviceConfig.promotionService());
     }
 
