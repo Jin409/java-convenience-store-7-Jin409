@@ -24,10 +24,6 @@ public class Product {
         return promotionItem != null;
     }
 
-    public boolean hasStock() {
-        return stockItem != null;
-    }
-
     public long getPrice() {
         return price;
     }

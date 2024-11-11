@@ -24,7 +24,7 @@ public class StockItemInventoryHandler extends InventoryHandler {
             return;
         }
 
-        if (product.hasStock() && product.getStockItem().getRemainingAfterReduction(orderedQuantity) > 0) {
+        if (product.getStockItem().getRemainingAfterReduction(orderedQuantity) > 0) {
             throw new IllegalArgumentException(OfStockItem.NOT_ENOUGH_QUANTITY);
         }
     }
