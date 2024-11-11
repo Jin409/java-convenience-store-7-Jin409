@@ -20,8 +20,9 @@ import store.model.promotion.Promotion;
 import store.model.promotion.PromotionItem;
 import store.model.repository.OrderRepositoryImpl;
 import store.model.repository.ProductRepository;
+import store.service.ServiceErrorMessages.OfOrderService;
 
-public class OrderServiceTest {
+public class OfOrderServiceTest {
 
     private OrderService orderService;
     private LocalDateTime orderedAt;
@@ -41,7 +42,7 @@ public class OrderServiceTest {
 
         // when & then
         assertThatThrownBy(() -> orderService.processOrder(orderRegisterDto)).isInstanceOf(
-                IllegalArgumentException.class).hasMessage(ErrorMessages.OrderService.INVALID_PRODUCT);
+                IllegalArgumentException.class).hasMessage(OfOrderService.INVALID_PRODUCT);
     }
 
     @Test

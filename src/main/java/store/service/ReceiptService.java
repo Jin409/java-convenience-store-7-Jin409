@@ -1,6 +1,6 @@
 package store.service;
 
-import static store.service.ErrorMessages.ReceiptService.NO_REGISTERED_RECEIPT;
+import static store.service.ServiceErrorMessages.OfReceiptService.NO_REGISTERED_RECEIPT;
 
 import java.util.ArrayList;
 import java.util.List;

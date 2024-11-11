@@ -1,7 +1,7 @@
 package store.service.product;
 
-import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
-import static store.service.ErrorMessages.ProductService.INVALID_PROMOTION_NAME;
+import static store.service.ServiceErrorMessages.OfOrderService.INVALID_PRODUCT;
+import static store.service.ServiceErrorMessages.OfProductService.INVALID_PROMOTION_NAME;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

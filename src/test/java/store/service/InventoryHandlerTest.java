@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.config.InventoryHandlerConfig;
-import store.model.ErrorMessages;
+import store.model.ModelErrorMessages.OfStockItem;
 import store.model.Product;
 import store.model.StockItem;
 import store.model.promotion.Promotion;
@@ -63,6 +63,6 @@ public class InventoryHandlerTest {
 
         // when & then
         assertThatThrownBy(() -> inventoryHandler.reduceQuantity(product, 10000, endAt.atStartOfDay())).isInstanceOf(
-                IllegalArgumentException.class).hasMessage(ErrorMessages.StockItem.NOT_ENOUGH_QUANTITY);
+                IllegalArgumentException.class).hasMessage(OfStockItem.NOT_ENOUGH_QUANTITY);
     }
 }

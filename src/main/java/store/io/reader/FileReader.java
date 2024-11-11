@@ -1,6 +1,6 @@
 package store.io.reader;
 
-import static store.io.IoErrorMessages.InFileReader.INVALID_DATA_FORMAT;
+import static store.io.IoErrorMessages.OfFileReader.INVALID_DATA_FORMAT;
 
 import java.io.File;
 import java.util.ArrayList;

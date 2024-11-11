@@ -17,9 +17,10 @@ import store.dto.ProductRegisterDto;
 import store.model.promotion.Promotion;
 import store.model.repository.ProductRepositoryImpl;
 import store.model.repository.PromotionRepository;
+import store.service.ServiceErrorMessages.OfProductService;
 import store.service.product.ProductService;
 
-public class ProductServiceTest {
+public class OfOfProductServiceTest {
 
     @Test
     void 존재하지_않은_프로모션에_적용되는_상품을_등록하고자_하면_예외가_발생한다() {
@@ -43,7 +44,7 @@ public class ProductServiceTest {
 
         // when & then
         assertThatThrownBy(() -> productService.saveProducts(productRegisterDtos)).isInstanceOf(
-                IllegalArgumentException.class).hasMessage(ErrorMessages.ProductService.INVALID_PROMOTION_NAME);
+                IllegalArgumentException.class).hasMessage(OfProductService.INVALID_PROMOTION_NAME);
     }
 
     @Test

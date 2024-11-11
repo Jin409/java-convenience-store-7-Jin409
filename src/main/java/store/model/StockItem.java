@@ -1,6 +1,6 @@
 package store.model;
 
-import static store.model.ErrorMessages.StockItem.NOT_ENOUGH_QUANTITY;
+import static store.model.ModelErrorMessages.OfStockItem.NOT_ENOUGH_QUANTITY;
 
 public class StockItem {
 

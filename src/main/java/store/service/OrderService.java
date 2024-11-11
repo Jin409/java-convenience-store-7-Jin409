@@ -1,7 +1,7 @@
 package store.service;
 
 
-import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
+import static store.service.ServiceErrorMessages.OfOrderService.INVALID_PRODUCT;
 
 import store.dto.OrderRegisterDto;
 import store.model.Order;

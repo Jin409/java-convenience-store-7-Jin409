@@ -1,6 +1,6 @@
 package store.service;
 
-import static store.service.ErrorMessages.OrderService.INVALID_PRODUCT;
+import static store.service.ServiceErrorMessages.OfOrderService.INVALID_PRODUCT;
 
 import java.util.List;
 import store.dto.OrderRegisterDto;
