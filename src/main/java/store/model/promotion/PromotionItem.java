@@ -45,8 +45,12 @@ public class PromotionItem {
         promotionQuantity = promotionQuantity - reduceQuantity;
     }
 
-    public long countPromotionApplicableQuantity() {
-        return promotion.countApplicablePromotionQuantity(promotionQuantity);
+    public long countPromotionalQuantityInInventory() {
+        return promotion.countPromotionalQuantityInInventory(promotionQuantity);
+    }
+
+    public long countPromotionalQuantityAccordingTo(long orderedQuantity) {
+        return promotion.countPromotionalQuantityAccordingTo(orderedQuantity);
     }
 
     public long countFreeQuantity(long orderedQuantity) {

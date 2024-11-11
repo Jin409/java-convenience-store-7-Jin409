@@ -30,7 +30,7 @@ public class PromotionTest {
         Promotion promotion = new Promotion("할인", quantityToBuy, quantityToGet, endDate.minusDays(1), endDate);
 
         // when
-        long result = promotion.countQuantityToGetInTotal(input);
+        long result = promotion.countPromotionalQuantityAccordingTo(input);
 
         // then
         assertThat(result).isEqualTo(expected);

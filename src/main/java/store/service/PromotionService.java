@@ -43,10 +43,10 @@ public class PromotionService {
     private PromotionApplyResult getPromotionAppliedResult(Product product, OrderRegisterDto orderRegisterDto) {
         long orderedQuantity = orderRegisterDto.quantity();
         PromotionItem promotionItem = product.getPromotionItem();
-        Promotion promotion = promotionItem.getPromotion();
 
-        long quantityWithoutPromotion = orderedQuantity - promotionItem.countPromotionApplicableQuantity();
-        long missingQuantity = promotion.countQuantityToGetInTotal(orderedQuantity) - orderedQuantity;
+        long quantityWithoutPromotion = orderedQuantity - promotionItem.countPromotionalQuantityInInventory();
+        long missingQuantity = promotionItem.countPromotionalQuantityAccordingTo(orderedQuantity) - orderedQuantity;
+
         if (product.hasEnoughPromotionQuantityFor(orderedQuantity + missingQuantity)) {
             return new PromotionApplyResult(product.getName(), quantityWithoutPromotion, missingQuantity);
         }

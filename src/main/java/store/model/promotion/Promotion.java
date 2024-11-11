@@ -27,17 +27,17 @@ public class Promotion {
         return !startDate.isAfter(orderedLocalDate) && !endDate.isBefore(orderedLocalDate);
     }
 
-    public long countApplicablePromotionQuantity(long orderedQuantity) {
+    public long countPromotionalQuantityInInventory(long orderedQuantity) {
         int promotionCycle = quantityToBuy + quantityToGet;
         return orderedQuantity / promotionCycle * promotionCycle;
     }
 
-    public long countQuantityToGetInTotal(long orderedQuantity) {
+    public long countPromotionalQuantityAccordingTo(long orderedQuantity) {
         long quantityCondition = quantityToBuy + quantityToGet;
         long remainingQuantity = orderedQuantity - (orderedQuantity / quantityCondition * quantityCondition);
 
         if (remainingQuantity == quantityToBuy) {
-            return orderedQuantity + remainingQuantity;
+            return orderedQuantity + 1;
         }
         return orderedQuantity;
     }
